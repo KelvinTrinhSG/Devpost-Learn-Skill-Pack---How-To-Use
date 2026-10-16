@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { stageText, type Dictionary, type StageText } from "@/content/en";
-import { stages, type Stage } from "@/content/stages";
+import { stages, type Stage, type TipKey } from "@/content/stages";
 import { useLang } from "@/lib/providers";
 import CopyButton from "@/components/ui/CopyButton";
 import ProgressRail from "./ProgressRail";
@@ -13,6 +13,8 @@ import FileTree from "./FileTree";
 import DocPreview from "./DocPreview";
 import StageControls, { type Phase } from "./StageControls";
 import StageDetails from "./StageDetails";
+import TipPopup from "./TipPopup";
+import CompletionMoment from "./CompletionMoment";
 
 const STEP_MS = 380; // delay between simulated lines
 const FINISH_MS = 700; // pause between the visitor's answer and the agent's reply
@@ -41,6 +43,8 @@ export default function JourneySimulator() {
   const [selected, setSelected] = useState<string | null>(null);
   const [fresh, setFresh] = useState<string[]>([]);
   const [flash, setFlash] = useState<Tab[]>([]);
+  const [tip, setTip] = useState<TipKey | null>(null);
+  const [celebrate, setCelebrate] = useState(false); // confetti only when stage 7 is completed, not on revisit
 
   const stage = stages[current];
   const text = stageText(t, stage.id);
@@ -49,6 +53,7 @@ export default function JourneySimulator() {
   function complete() {
     setDone((d) => (d.includes(stage.id) ? d : [...d, stage.id]));
     setPhase("done");
+    if (current === stages.length - 1) setCelebrate(true);
     if (stage.files?.length) {
       setFresh(stage.files);
       setSelected(docPath(stage));
@@ -63,7 +68,7 @@ export default function JourneySimulator() {
     const delay = prefersReducedMotion() ? 0 : STEP_MS;
     const id = window.setTimeout(() => {
       if (shown < total) setShown((s) => s + 1);
-      else if (stage.interaction === "answer") setPhase("awaiting");
+      else if (stage.interaction !== "run") setPhase("awaiting");
       else complete();
     }, delay);
     return () => window.clearTimeout(id);
@@ -91,9 +96,24 @@ export default function JourneySimulator() {
     setPhase("finishing");
   }
 
-  function goTo(index: number) {
+  const closeTip = useCallback(() => setTip(null), []);
+
+  function next() {
+    if (stage.tipKey) setTip(stage.tipKey);
+    goTo(current + 1);
+  }
+
+  function startOver() {
+    setDone([]);
+    setAnswers({});
+    setSelected(null);
+    setCelebrate(false);
+    goTo(0, true);
+  }
+
+  function goTo(index: number, reset = false) {
     const next = stages[index];
-    const isDone = done.includes(next.id);
+    const isDone = !reset && done.includes(next.id);
     setCurrent(index);
     setPhase(isDone ? "done" : "idle");
     setShown(isDone ? totalSteps(next, stageText(t, next.id)) : 0);
@@ -126,11 +146,13 @@ export default function JourneySimulator() {
     messages.push({ from: "you", text: stage.command, mono: true });
     (text.chat ?? []).slice(0, shown - 1).forEach((m) => messages.push({ from: "agent", text: m }));
     const picked = answers[stage.id];
-    if (picked !== undefined && (phase === "finishing" || phase === "done") && text.answers) {
-      messages.push({ from: "you", text: text.answers[picked].label });
-    }
-    if (phase === "done" && text.reply) messages.push({ from: "agent", text: text.reply });
+    const chosen = picked !== undefined ? text.answers?.[picked] : undefined;
+    if (chosen && (phase === "finishing" || phase === "done")) messages.push({ from: "you", text: chosen.label });
+    const reply = chosen?.reply ?? text.reply;
+    if (phase === "done" && reply) messages.push({ from: "agent", text: reply });
   }
+
+  const isLast = current === stages.length - 1;
 
   const views: Record<Tab, ReactNode> = {
     terminal: (
@@ -165,7 +187,7 @@ export default function JourneySimulator() {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="relative space-y-4">
       <ProgressRail current={current} done={done} onJump={goTo} />
 
       <div>
@@ -190,18 +212,25 @@ export default function JourneySimulator() {
       />
 
       <div className="min-h-[44px]">
-        <StageControls
-          phase={phase}
-          text={text}
-          isLast={current === stages.length - 1}
-          onRun={run}
-          onAnswer={answer}
-          onNext={() => goTo(current + 1)}
-        />
+        {isLast && phase === "done" ? (
+          <CompletionMoment celebrate={celebrate} onStartOver={startOver} />
+        ) : (
+          <StageControls
+            phase={phase}
+            interaction={stage.interaction}
+            text={text}
+            isLast={isLast}
+            onRun={run}
+            onAnswer={answer}
+            onNext={next}
+          />
+        )}
       </div>
 
       <CopyButton command={stage.command} label={t.sim.commandLabel} />
       <StageDetails key={stage.id} text={text} />
+
+      {tip && <TipPopup tip={tip} onClose={closeTip} />}
     </div>
   );
 }

@@ -10,8 +10,10 @@ export type Stage = {
   terminalLines?: string[]; // played one by one; lines starting with "$ " are typed commands
   files?: string[]; // paths that appear in the project tree when the stage completes
   interaction: "run" | "answer" | "approve" | "fix";
-  tipKey?: string; // TipPopup when leaving this stage
+  tipKey?: TipKey; // TipPopup when leaving this stage
 };
+
+export type TipKey = "clear" | "speech" | "review";
 
 export const PROJECT_FOLDER = "my-flashcards";
 
@@ -46,5 +48,42 @@ export const stages: Stage[] = [
     tab: "chat",
     files: ["devpost/learner-profile.md"],
     interaction: "answer",
+    tipKey: "clear",
+  },
+  {
+    id: 3,
+    command: "/2-scope",
+    tab: "chat",
+    files: ["devpost/scope.md"],
+    interaction: "answer",
+    tipKey: "speech",
+  },
+  {
+    id: 4,
+    command: "/3-prd",
+    tab: "chat",
+    files: ["devpost/prd.md"],
+    interaction: "answer",
+  },
+  {
+    id: 5,
+    command: "/4-spec",
+    tab: "chat",
+    files: ["devpost/spec.md"],
+    interaction: "answer",
+    tipKey: "review",
+  },
+  {
+    id: 6,
+    command: "/5-build",
+    tab: "chat",
+    files: ["devpost/checklist.md"],
+    interaction: "approve",
+  },
+  {
+    id: 7,
+    command: "/6-ship",
+    tab: "chat",
+    interaction: "fix",
   },
 ];

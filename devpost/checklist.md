@@ -9,7 +9,7 @@ Build mode: fast
 
 ## Slices
 
-- [ ] **1. The hero simulator plays the first two stages (Install and `/1-start`)**
+- [x] **1. The hero simulator plays the first two stages (Install and `/1-start`)**
   Becomes usable: A running page in the Taskify style (Vietnamese by default, EN/VI toggle in the navbar) whose hero shows the journey simulator. Stage ① Install: click Run → terminal lines play and the 6 skill folders appear. Stage ② `/1-start`: the agent asks one question, the visitor picks a preset answer, and that answer appears inside `learner-profile.md` in the `devpost/` tab. Progress rail, Details panel, and Copy button work on both stages.
   Why now: This is the unique kernel — learning by trying the steps — and its riskiest piece is the "stage script as data" engine plus "picked answer appears in the document". Proving it on the first slice, together with the scaffold, design tokens, and typed EN/VI dictionaries, means every later stage is just more data.
   PRD ref: `prd.md > The Core Journey` (steps 1–5), `prd.md > Journey Simulator (Guided mode)`, `prd.md > Look and Feel`, `prd.md > Language, Theme, and Sound Toggles` (EN/VI part)
@@ -19,7 +19,7 @@ Build mode: fast
   Learner check: Run `npm run dev`, open http://localhost:3000. Click Run on stage ①, watch the terminal and the skill folders appear. Go to stage ②, pick an answer and open the `devpost/` tab — your answer should be in `learner-profile.md`. Open Details, click Copy and paste somewhere. Switch EN/VI. Tell me whether the look and the feel of the simulator match what you pictured.
   Commit: `Add hero journey simulator with Install and /1-start stages`
 
-- [ ] **2. The whole 7-stage journey plays through to the completion moment**
+- [x] **2. The whole 7-stage journey plays through to the completion moment**
   Becomes usable: Stages ③ `/2-scope` → ⑦ `/6-ship` are playable: interview answers fill `scope.md`, `prd.md`, `spec.md`; ⑥ ticks off `checklist.md` items with an Approve / Request a change checkpoint; ⑦ finds a fake API key, Fix, then GitHub push and demo-video checklist. Tip pop-ups appear between stages; finishing ⑦ fires confetti and shows the badge with Start over.
   Why now: Completes the kernel ("watch the whole journey run") right after its engine is proven, before any secondary section. Content for the sample project (vocabulary flashcard app) is written here in both languages.
   PRD ref: `prd.md > Journey Simulator (Guided mode)` (per-stage content, acceptance criteria), `prd.md > The Core Journey` (steps 6–8)
@@ -61,7 +61,7 @@ Build mode: fast
 
 ## Hands-on Checkpoints
 
-- [ ] Early usable behavior explored — after slice 1 (first look at the style and simulator feel, while it can still shape stages ③–⑦)
+- [x] Early usable behavior explored — after slice 1 (first look at the style and simulator feel, while it can still shape stages ③–⑦). Learner tried it: "tất cả đều ok" (all OK) — no changes requested.
 - [ ] Final kick-the-tires exploration and feedback completed
 
 ## Final Review
@@ -81,4 +81,7 @@ Reflection:
 Activity mode:
 
 ## Revisions
+
+- Removed the scaffold's `cacheComponents` / `partialPrefetching` options from `next.config.ts` and kept `output: "export"` — `create-next-app` 16.4 enabled them by default; they aren't needed for a fully client-side static page.
+- Added headless-browser interaction checks (Playwright driving the installed Edge, run from a scratch folder, not a project dependency) to slice verification — build and HTTP checks alone can't confirm Run / answer / Copy behavior.
 
