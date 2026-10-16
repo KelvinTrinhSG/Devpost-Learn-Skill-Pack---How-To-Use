@@ -214,6 +214,7 @@ Devpost Learn Skill Pack - How To Use/
 - **Vercel** (hosting, optional per rules; learner chose it) — free Hobby plan for a personal static site; no API calls, no keys. Import the GitHub repo; build command `next build`, output `out/`. Docs: https://vercel.com/docs/frameworks/nextjs
 - **GitHub** — public repository (required for submission).
 - **Google Fonts via `next/font`** — downloaded at build time and self-hosted; no runtime call.
+- **Source preview images** — the Sources footer shows each video's YouTube thumbnail (`i.ytimg.com`) and GitHub's social card for the skill-pack repo (`opengraph.githubassets.com`), loaded in the visitor's browser. If they fail to load, a colored placeholder with an icon is shown instead. Added at final review, at the learner's request.
 - No APIs, databases, or keys.
 
 ## Important Failure Modes
