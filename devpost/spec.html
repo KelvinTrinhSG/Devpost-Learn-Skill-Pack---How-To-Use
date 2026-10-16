@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spec — Devpost Learn Skill Pack - How To Use (draft)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#FAFAF8; --bg-alt:#F3F0E9; --surface:#FFFFFF; --surface-2:#F1EEE7; --border:#E3DFD6; --border-strong:#D2CDC0;
+    --text:#171717; --muted:#55524B; --dim:#6E6B62; --faint:#8B877C;
+    --primary:#FF004D; --primary-strong:#990070; --secondary:#5546FF; --secondary-light:#6E4FE0;
+    --success:#16824F; --blue:#2563EB; --gold:#B8860B;
+    --shadow-sm:0 1px 3px rgba(0,0,0,.08); --shadow-md:0 4px 20px rgba(0,0,0,.10);
+    --ease:cubic-bezier(0.16,1,0.3,1);
+    --sans:"Geist","Segoe UI",system-ui,sans-serif; --mono:"Geist Mono",Consolas,monospace;
+  }
+  [data-theme="dark"] {
+    --bg:#0A0A0F; --bg-alt:#0D0D12; --surface:#131313; --surface-2:#1B1B1B; --border:#262626; --border-strong:#333;
+    --text:#F2F1EE; --muted:#A8A49A; --dim:#8F8B81; --faint:#6B675F;
+    --primary-strong:#FF5FA8; --secondary:#8B80FF; --secondary-light:#A79CFF; --success:#00D395; --blue:#60A5FA; --gold:#FFD700;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:var(--sans); background:var(--bg); color:var(--text); line-height:1.6; }
+  main { max-width:1100px; margin:0 auto; padding:40px 24px 96px; position:relative; }
+  .glow { position:absolute; top:-160px; left:50%; transform:translateX(-50%); width:800px; height:500px; background:radial-gradient(ellipse, color-mix(in srgb,var(--primary) 8%,transparent) 0%, transparent 70%); pointer-events:none; z-index:-1; }
+  .top { display:flex; justify-content:space-between; align-items:center; }
+  .pill { display:inline-flex; gap:6px; background:color-mix(in srgb,var(--primary) 7%,transparent); border:1px solid color-mix(in srgb,var(--primary) 16%,transparent); border-radius:20px; padding:4px 14px; font-size:12px; font-weight:600; color:var(--primary); letter-spacing:.06em; text-transform:uppercase; }
+  .tbtn { width:34px; height:34px; border-radius:8px; border:1px solid var(--border); background:var(--surface); color:var(--muted); cursor:pointer; }
+  h1 { font-size:clamp(32px,5vw,52px); font-weight:800; letter-spacing:-.03em; line-height:1.1; margin:18px 0 14px; }
+  .grad { background:linear-gradient(90deg,var(--primary),var(--primary-strong)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  .lead { font-size:18px; color:var(--muted); max-width:780px; margin:0; }
+  h2 { font-size:clamp(24px,3vw,32px); font-weight:800; letter-spacing:-.03em; margin:14px 0 8px; }
+  section { margin-top:72px; }
+  .sub { color:var(--dim); margin:0 0 20px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:22px; box-shadow:var(--shadow-sm); }
+  code, .mono { font-family:var(--mono); font-size:.9em; }
+  code { background:var(--surface-2); border:1px solid var(--border); border-radius:6px; padding:1px 6px; }
+  .badge { display:inline-flex; gap:5px; border-radius:8px; padding:2px 9px; font-size:12px; font-weight:600; background:color-mix(in srgb,var(--secondary) 9%,transparent); color:var(--secondary-light); border:1px solid color-mix(in srgb,var(--secondary) 19%,transparent); }
+  .badge.red { background:color-mix(in srgb,var(--primary) 9%,transparent); color:var(--primary); border-color:color-mix(in srgb,var(--primary) 19%,transparent); }
+  .badge.green { background:color-mix(in srgb,var(--success) 9%,transparent); color:var(--success); border-color:color-mix(in srgb,var(--success) 19%,transparent); }
+  svg { width:100%; height:auto; display:block; }
+  .an { cursor:pointer; }
+  .an rect { transition:stroke .15s, fill .15s; }
+  .an:hover rect, .an.active rect { stroke:var(--primary); fill:color-mix(in srgb,var(--primary) 8%,var(--surface)); }
+  .an text { pointer-events:none; }
+  #ainfo { margin-top:12px; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:12px 16px; min-height:56px; }
+  .plain p { margin:0 0 10px; }
+  .plain ul { margin:0; padding-left:18px; }
+  .stack { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; }
+  .chip { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px; transition:all .2s var(--ease); }
+  .chip:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:color-mix(in srgb,var(--primary) 25%,transparent); }
+  .chip b { display:block; }
+  .chip small { color:var(--dim); }
+  .chip a { font-size:12px; color:var(--primary); }
+  /* stepper */
+  .steps { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+  .steps button { font:inherit; font-family:var(--mono); font-size:13px; font-weight:700; width:40px; height:40px; border-radius:10px; border:1px solid var(--border); background:var(--surface); color:var(--muted); cursor:pointer; }
+  .steps button.on { background:var(--primary); color:#fff; border-color:var(--primary); }
+  .stepbox { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:760px){ .stepbox { grid-template-columns:1fr; } }
+  .stepbox .mini { background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:12px 14px; }
+  .stepbox .mini b { display:block; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--dim); margin-bottom:4px; }
+  .btn { font:inherit; font-weight:700; font-size:14px; padding:9px 16px; border-radius:8px; cursor:pointer; }
+  .btn-primary { background:var(--primary); color:#fff; border:none; }
+  .btn-outline { background:transparent; color:var(--muted); border:1px solid var(--border-strong); }
+  /* components */
+  .comp details { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:12px 16px; margin:8px 0; }
+  .comp summary { cursor:pointer; font-weight:600; }
+  .comp details[open] { border-color:color-mix(in srgb,var(--primary) 30%,transparent); }
+  .comp details details { margin-left:14px; background:var(--surface-2); }
+  .ref { font-size:12px; color:var(--dim); font-family:var(--mono); }
+  /* storage table */
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th, td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
+  th { font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--dim); }
+  tr:hover td { background:var(--surface-2); }
+  pre { background:#131313; color:#F2F1EE; border-radius:12px; padding:16px 18px; overflow-x:auto; font-family:var(--mono); font-size:13px; line-height:1.55; margin:0; }
+  pre .c { color:#8F8B81; }
+  pre .k { color:#FF5FA8; }
+  pre .f { color:#00D395; }
+  .tree span { cursor:pointer; }
+  .tree span:hover { color:#FF5FA8; }
+  #tinfo { margin-top:10px; }
+  .fail { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
+  .fail .card { border-left:4px solid var(--gold); }
+  .fail h4 { margin:0 0 6px; font-size:15px; }
+  .fail p { margin:0; font-size:14px; color:var(--dim); }
+  .tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+  .tabs button { font:inherit; font-size:14px; font-weight:600; background:var(--surface); color:var(--muted); border:1px solid var(--border); border-radius:999px; padding:7px 16px; cursor:pointer; }
+  .tabs button.on { background:var(--primary); color:#fff; border-color:var(--primary); }
+  .panel { display:none; } .panel.on { display:block; }
+  .panel li { margin:6px 0; }
+  .open { border-left:4px solid var(--secondary); }
+  footer { margin-top:72px; color:var(--faint); font-size:13px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="glow"></div>
+  <div class="top"><span class="pill">Spec · approved</span><button class="tbtn" id="theme" aria-label="Toggle light/dark">◐</button></div>
+  <h1>How it's <span class="grad">built</span></h1>
+  <p class="lead">One static web page: Next.js + React + Tailwind, served by Vercel. It has no server and no database. Content lives in typed EN/VI dictionaries, the simulator "plays" stage scripts, and the browser's <code>localStorage</code> remembers where you were.</p>
+
+  <section>
+    <span class="pill">In plain language</span>
+    <h2>The pieces</h2>
+    <div class="card plain">
+      <p>At build time, Next.js turns the project into plain HTML, CSS and JavaScript files, and Vercel hands those files to visitors. Everything else happens inside the visitor's browser:</p>
+      <ul>
+        <li><b>Content files</b> <code>en.ts</code> / <code>vi.ts</code> hold every word. Their keys are identical, and the build fails if Vietnamese is missing one.</li>
+        <li><b>Stage scripts</b> <code>stages.ts</code> describe each of the 7 stages as data. The simulator just plays them.</li>
+        <li><b>Components</b> make up the page: navbar, hero + simulator / quick list, the drag-and-drop game, tips, footer.</li>
+        <li><b>localStorage</b> is the browser's sticky note. It remembers the stage, mode, language, theme and sound.</li>
+        <li><b>Web Audio</b> makes the clicks and chimes in code. There are no sound files.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <span class="pill">Architecture</span>
+    <h2>How the pieces connect</h2>
+    <p class="sub">Click a block to see what it does.</p>
+    <div class="card">
+      <svg viewBox="0 0 1000 360" role="img" aria-label="Architecture diagram">
+        <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#FF004D"/></marker></defs>
+        <g fill="none" stroke="#FF004D" stroke-width="1.6" marker-end="url(#ar)">
+          <path d="M140 70 H 216"/>
+          <path d="M380 70 H 456"/>
+          <path d="M560 105 V 150"/>
+          <path d="M470 190 H 380 V 230"/>
+          <path d="M560 225 V 250"/>
+          <path d="M650 190 H 740 V 230"/>
+          <path d="M150 300 C 220 300, 230 200, 456 180"/>
+          <path d="M150 210 C 260 200, 300 180, 456 172"/>
+          <path d="M850 110 C 850 150, 700 160, 666 168"/>
+        </g>
+        <g stroke="#5546FF" stroke-dasharray="5 4" fill="none" stroke-width="1.4"><path d="M470 200 C 300 260, 200 300, 150 310"/></g>
+        <g class="an" data-k="vercel"><rect x="10" y="40" width="130" height="60" rx="12" fill="var(--surface-2)" stroke="var(--border-strong)"/><text x="75" y="66" text-anchor="middle" font-weight="700" font-size="14" fill="currentColor">Vercel</text><text x="75" y="84" text-anchor="middle" font-size="11" fill="#8B877C">static files</text></g>
+        <g class="an" data-k="browser"><rect x="220" y="40" width="160" height="60" rx="12" fill="var(--surface-2)" stroke="var(--border-strong)"/><text x="300" y="66" text-anchor="middle" font-weight="700" font-size="14" fill="currentColor">Visitor's browser</text><text x="300" y="84" text-anchor="middle" font-size="11" fill="#8B877C">loads page.tsx</text></g>
+        <g class="an" data-k="providers"><rect x="460" y="40" width="200" height="65" rx="12" fill="var(--surface-2)" stroke="var(--border-strong)"/><text x="560" y="66" text-anchor="middle" font-weight="700" font-size="14" fill="currentColor">Providers</text><text x="560" y="86" text-anchor="middle" font-size="11" fill="#8B877C">lang · theme · sound · progress</text></g>
+        <g class="an" data-k="sim"><rect x="460" y="150" width="200" height="75" rx="12" fill="color-mix(in srgb,#FF004D 7%,var(--surface))" stroke="#FF004D"/><text x="560" y="180" text-anchor="middle" font-weight="800" font-size="14" fill="#FF004D">Hero · JourneySimulator</text><text x="560" y="200" text-anchor="middle" font-size="11" fill="#8B877C">plays stage scripts</text><text x="560" y="214" text-anchor="middle" font-size="11" fill="#8B877C">or QuickCommandList</text></g>
+        <g class="an" data-k="why"><rect x="290" y="232" width="180" height="56" rx="12" fill="var(--surface-2)" stroke="var(--border-strong)"/><text x="380" y="256" text-anchor="middle" font-weight="700" font-size="13" fill="currentColor">WhySection</text><text x="380" y="274" text-anchor="middle" font-size="11" fill="#8B877C">DecisionGame · dnd-kit</text></g>
+        <g class="an" data-k="tips"><rect x="480" y="252" width="160" height="56" rx="12" fill="var(--surface-2)" stroke="var(--border-strong)"/><text x="560" y="276" text-anchor="middle" font-weight="700" font-size="13" fill="currentColor">TipsSection</text><text x="560" y="294" text-anchor="middle" font-size="11" fill="#8B877C">tip cards</text></g>
+        <g class="an" data-k="footer"><rect x="660" y="232" width="160" height="56" rx="12" fill="var(--surface-2)" stroke="var(--border-strong)"/><text x="740" y="256" text-anchor="middle" font-weight="700" font-size="13" fill="currentColor">SiteFooter</text><text x="740" y="274" text-anchor="middle" font-size="11" fill="#8B877C">sources · unofficial</text></g>
+        <g class="an" data-k="content"><rect x="10" y="185" width="140" height="60" rx="12" fill="var(--surface-2)" stroke="#16824F"/><text x="80" y="211" text-anchor="middle" font-weight="700" font-size="13" fill="currentColor">en.ts / vi.ts</text><text x="80" y="229" text-anchor="middle" font-size="11" fill="#8B877C">typed dictionaries</text></g>
+        <g class="an" data-k="stages"><rect x="10" y="275" width="140" height="60" rx="12" fill="var(--surface-2)" stroke="#16824F"/><text x="80" y="301" text-anchor="middle" font-weight="700" font-size="13" fill="currentColor">stages.ts</text><text x="80" y="319" text-anchor="middle" font-size="11" fill="#8B877C">7 stage scripts</text></g>
+        <g class="an" data-k="storage"><rect x="770" y="50" width="160" height="60" rx="12" fill="var(--surface-2)" stroke="#5546FF"/><text x="850" y="76" text-anchor="middle" font-weight="700" font-size="13" fill="currentColor">localStorage</text><text x="850" y="94" text-anchor="middle" font-size="11" fill="#8B877C">skillguide:*</text></g>
+        <path d="M660 72 H 766" stroke="#5546FF" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+        <g class="an" data-k="libs"><rect x="830" y="190" width="160" height="80" rx="12" fill="var(--surface-2)" stroke="var(--border-strong)"/><text x="910" y="216" text-anchor="middle" font-weight="700" font-size="13" fill="currentColor">Browser APIs + libs</text><text x="910" y="236" text-anchor="middle" font-size="11" fill="#8B877C">Web Audio · Clipboard</text><text x="910" y="252" text-anchor="middle" font-size="11" fill="#8B877C">canvas-confetti</text></g>
+        <path d="M662 200 C 760 200, 790 225, 826 228" stroke="#FF004D" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+      </svg>
+      <div id="ainfo">← Click a block.</div>
+    </div>
+  </section>
+
+  <section>
+    <span class="pill">Core journey through the system</span>
+    <h2>Follow one visit</h2>
+    <p class="sub">Step through what the visitor does and what the code does.</p>
+    <div class="card">
+      <div class="steps" id="steps"></div>
+      <div class="stepbox">
+        <div class="mini"><b>Visitor</b><span id="sv"></span></div>
+        <div class="mini"><b>Under the hood</b><span id="sc"></span></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-outline" id="prev">← Back</button><button class="btn btn-primary" id="next">Next →</button></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="pill">Stack</span>
+    <h2>Tools</h2>
+    <p class="sub">Next.js + React + Tailwind was your choice. The rest were Claude's recommendations, and you accepted them. Versions get verified at build start.</p>
+    <div class="stack">
+      <div class="chip"><b>Next.js</b><small>App Router, static export</small><br><a href="https://nextjs.org/docs/app/guides/static-exports">docs</a> <span class="badge red">your choice</span></div>
+      <div class="chip"><b>React + TypeScript</b><small>comes with Next.js</small><br><a href="https://react.dev">docs</a></div>
+      <div class="chip"><b>Tailwind v4</b><small>+ Taskify CSS variables</small><br><a href="https://tailwindcss.com/docs">docs</a> <span class="badge red">your choice</span></div>
+      <div class="chip"><b>Geist / Geist Mono</b><small>via next/font</small><br><a href="https://nextjs.org/docs/app/getting-started/fonts">docs</a></div>
+      <div class="chip"><b>@dnd-kit/core</b><small>drag-and-drop, touch + keyboard</small><br><a href="https://docs.dndkit.com">docs</a></div>
+      <div class="chip"><b>canvas-confetti</b><small>completion effect</small><br><a href="https://github.com/catdad/canvas-confetti">docs</a></div>
+      <div class="chip"><b>Web Audio API</b><small>generated sounds</small><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API">docs</a></div>
+      <div class="chip"><b>Clipboard API</b><small>copy buttons</small><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/writeText">docs</a></div>
+      <div class="chip"><b>Vercel</b><small>hosting (your choice)</small><br><a href="https://vercel.com/docs/frameworks/nextjs">docs</a> <span class="badge red">your choice</span></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="pill">Run it</span>
+    <h2>Where it runs &amp; how someone tries it</h2>
+    <div class="card">
+<pre><span class="c"># local development</span>
+<span class="k">npm</span> install
+<span class="k">npm</span> run dev        <span class="c"># → open http://localhost:3000</span>
+
+<span class="c"># production check (static files in out/)</span>
+<span class="k">npm</span> run build
+
+<span class="c"># deploy: import the public GitHub repo into Vercel (finalized in /6-ship)</span></pre>
+      <p style="margin:14px 0 0;color:var(--dim)"><b>Demo video:</b> run a few stages → pick a preset answer and show it land in the document → copy a command → flip to Quick mode → switch EN/VI → play the drag-and-drop → reload to show the stage is remembered. <b>Submission needs</b> the video + a public GitHub repo.</p>
+    </div>
+  </section>
+
+  <section class="comp">
+    <span class="pill">Components</span>
+    <h2>Every piece and the PRD heading it serves</h2>
+    <details><summary>Providers (Language, Theme, Sound, Progress)</summary><p>Loads and saves preferences and progress in localStorage. Exposes useLang / useTheme / useSound / useProgress.</p><div class="ref">prd.md › Language, Theme, and Sound Toggles · States and Boundaries</div></details>
+    <details><summary>Navbar</summary><p>Sticky with a blurred background. Page name, anchors, EN/VI, theme and sound toggles.</p><div class="ref">prd.md › Screens and Layout</div></details>
+    <details><summary>Hero + ModeSwitch</summary><p>Headline, an "Unofficial community guide" badge, and the Guided ⇄ "I already know this" switch.</p><div class="ref">prd.md › Screens and Layout · Quick Command List</div></details>
+    <details open><summary>JourneySimulator <span class="badge red">kernel</span></summary><p>Owns the current stage and plays its script step by step. Shows everything at once if the visitor prefers reduced motion.</p><div class="ref">prd.md › Journey Simulator (Guided mode)</div>
+      <details><summary>ProgressRail</summary><p>7 buttons with done/current state. Click one to jump to that stage.</p></details>
+      <details><summary>SimWindow → TerminalView · ChatView · FileTree · DocPreview</summary><p>A window frame with 3 tabs that auto-selects the right one. DocPreview inserts the chosen preset answer.</p></details>
+      <details><summary>StageControls</summary><p>Run / preset answers / Approve-Request change / Fix.</p></details>
+      <details><summary>StageDetails</summary><p>Purpose, file, tip, example, all taken from the dictionary.</p></details>
+      <details><summary>CopyButton</summary><p>Clipboard → "Copied ✓". If that fails, it selects the text and shows a Ctrl+C hint.</p></details>
+      <details><summary>TipPopup · CompletionMoment</summary><p>Stage-change tips. Confetti, a badge, and Start over at the end.</p></details>
+    </details>
+    <details><summary>QuickCommandList</summary><p>The 7 real commands, each with a description and a copy button.</p><div class="ref">prd.md › Quick Command List</div></details>
+    <details><summary>WhySection + DecisionGame + AppPreview</summary><p>Method explanations plus a dnd-kit game with about 6 cards and 2 zones. The preview switches between generic, in-between and personal. The example is original.</p><div class="ref">prd.md › Why It Works</div></details>
+    <details><summary>TipsSection</summary><p>Tip cards from the dictionary.</p><div class="ref">prd.md › Best Practices &amp; Tips</div></details>
+    <details><summary>SiteFooter</summary><p>Credits to Joe's videos and the skill pack, a note that the content is rewritten in our own words, and an unofficial-guide note.</p><div class="ref">prd.md › Sources Footer</div></details>
+    <details><summary>Shared UI</summary><p>Reveal, SectionLabel, Badge, Button, all in Taskify style.</p></details>
+  </section>
+
+  <section>
+    <span class="pill">Data</span>
+    <h2>Where data lives</h2>
+    <div class="tabs" id="dtabs"><button data-p="p1" class="on">Browser storage</button><button data-p="p2">Stage script</button><button data-p="p3">Dictionaries</button></div>
+    <div class="card">
+      <div class="panel on" id="p1">
+        <table>
+          <tr><th>Key</th><th>Value</th><th>Updated when</th><th>On return</th></tr>
+          <tr><td><code>skillguide:lang</code></td><td>en | vi</td><td>language toggle</td><td>restored; if absent, <b>vi</b> (default)</td></tr>
+          <tr><td><code>skillguide:theme</code></td><td>light | dark</td><td>theme toggle</td><td>applied before first paint</td></tr>
+          <tr><td><code>skillguide:sound</code></td><td>on | off</td><td>sound toggle</td><td>restored; default on</td></tr>
+          <tr><td><code>skillguide:mode</code></td><td>guided | quick</td><td>mode switch</td><td>restored</td></tr>
+          <tr><td><code>skillguide:progress</code></td><td>{ stage, done[], answers{} }</td><td>Run / answer / jump / Start over</td><td>reopens at stage + "Welcome back"</td></tr>
+        </table>
+        <p style="margin:10px 0 0;color:var(--dim);font-size:14px">Decision-game card positions are not saved.</p>
+      </div>
+      <div class="panel" id="p2">
+<pre><span class="k">type</span> <span class="f">Stage</span> = {
+  id: 1 | 2 | 3 | 4 | 5 | 6 | 7;
+  command: string;              <span class="c">// exact real command, copied as-is</span>
+  tab: "terminal" | "chat" | "files";
+  terminalLines?: string[];     <span class="c">// played one by one</span>
+  files?: string[];             <span class="c">// e.g. ["devpost/scope.md"]</span>
+  interaction: "run" | "answer" | "approve" | "fix";
+  tipKey?: string;              <span class="c">// TipPopup when leaving this stage</span>
+};</pre>
+      </div>
+      <div class="panel" id="p3">
+<pre><span class="c">// content/en.ts — the source of truth</span>
+<span class="k">export const</span> en = { hero: { title: "…" }, stages: { 1: { caption: "…" } } };
+<span class="k">export type</span> <span class="f">Dictionary</span> = <span class="k">typeof</span> en;
+
+<span class="c">// content/vi.ts — must match every key, or the build fails</span>
+<span class="k">export const</span> vi: <span class="f">Dictionary</span> = { hero: { title: "…" }, stages: { 1: { caption: "…" } } };</pre>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="pill">File structure</span>
+    <h2>Where everything lives</h2>
+    <p class="sub">Click a highlighted name.</p>
+<pre class="tree">Devpost Learn Skill Pack - How To Use/
+├── <span data-t="app/ holds layout.tsx (fonts, theme-init script, Providers), page.tsx (assembles the sections), and globals.css (Taskify tokens, light/dark, shared classes).">app/</span>
+├── <span data-t="components/ holds Navbar, Hero, ModeSwitch, QuickCommandList, TipsSection, SiteFooter, and shared ui/ pieces.">components/</span>
+│   ├── <span data-t="simulator/ is the kernel: JourneySimulator, ProgressRail, SimWindow, TerminalView, ChatView, FileTree, DocPreview, StageControls, StageDetails, TipPopup, CompletionMoment.">simulator/</span>
+│   ├── <span data-t="why/ holds WhySection, DecisionGame (dnd-kit) and AppPreview.">why/</span>
+│   └── <span data-t="ui/ holds Badge, Button, CopyButton, Reveal, SectionLabel.">ui/</span>
+├── <span data-t="content/ holds en.ts, vi.ts (typed dictionaries) and stages.ts (stage scripts). Edit content here, not in components.">content/</span>
+├── <span data-t="lib/ holds providers.tsx (contexts + localStorage), storage.ts (safe read/write) and sound.ts (Web Audio tones).">lib/</span>
+├── <span data-t="public/ holds the favicon and social image.">public/</span>
+├── <span data-t="next.config.ts sets output: 'export' for static files.">next.config.ts</span> · package.json · tsconfig.json · README.md
+├── <span data-t=".agents/ is the installed skill pack (curriculum).">.agents/</span>
+└── <span data-t="devpost/ is the Devpost learning workspace: profile, scope, prd, spec, checklist.">devpost/</span></pre>
+    <div id="tinfo" class="card" style="padding:12px 16px">← Click a highlighted name.</div>
+  </section>
+
+  <section>
+    <span class="pill">Failure modes</span>
+    <h2>Where it can break, and the fallback</h2>
+    <div class="fail">
+      <div class="card"><h4>Clipboard blocked</h4><p>The text gets selected and a "Press Ctrl+C" hint appears.</p></div>
+      <div class="card"><h4>localStorage unavailable</h4><p>Falls back to defaults. The page works, just without memory.</p></div>
+      <div class="card"><h4>Audio blocked</h4><p>Sound starts after the first click. Failures stay silent.</p></div>
+      <div class="card"><h4>Missing VI text</h4><p>Caught at build time by the Dictionary type.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="pill">Decisions &amp; open issues</span>
+    <h2>What's settled, what's left</h2>
+    <div class="tabs" id="otabs"><button data-p="o1" class="on">Simplified</button><button data-p="o2">Decisions</button><button data-p="o3">Open</button></div>
+    <div class="card">
+      <ul class="panel on" id="o1">
+        <li><b>Static export</b> instead of a server: everything runs in the browser.</li>
+        <li><b>Two typed dictionaries</b> instead of an i18n library with /en and /vi routes.</li>
+        <li><b>localStorage</b> instead of accounts.</li>
+        <li><b>Scripted, simulated stages</b> instead of a real agent, labeled as simulated on the page.</li>
+        <li><b>Generated sounds</b> instead of audio files.</li>
+      </ul>
+      <ul class="panel" id="o2">
+        <li>Next.js + React + Tailwind: <b>your choice</b>, familiar from Taskify.</li>
+        <li>Vercel deploy: <b>your choice</b>.</li>
+        <li>Dictionaries, localStorage, Web Audio, dnd-kit, confetti, Geist, stage scripts as data: Claude's recommendations, <b>accepted by you</b>.</li>
+        <li>Learner uncertainty: none identified. Noted, and no exercise added.</li>
+      </ul>
+      <ul class="panel open" id="o3">
+        <li><b>Library versions</b>: verify at build start.</li>
+        <li style="color:var(--dim)">Settled at review: <b>default language Vietnamese</b> (your decision). <b>Sample project</b>: an English vocabulary flashcard app for Vietnamese learners (proposed by Claude, accepted by you).</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>Visual companion to <code>devpost/spec.md</code>. The Markdown file is canonical.</footer>
+</main>
+<script>
+  document.getElementById('theme').onclick = () => { const r = document.documentElement; r.dataset.theme = r.dataset.theme === 'dark' ? '' : 'dark'; };
+  document.querySelectorAll('svg text').forEach(t => { if (t.getAttribute('fill') === 'currentColor') t.style.fill = 'var(--text)'; });
+
+  const A = {
+    vercel: '<b>Vercel</b> serves the static files that Next.js produced at build time. There are no API calls and no keys.',
+    browser: '<b>Visitor\'s browser</b> runs everything: React components, sounds, clipboard, storage.',
+    providers: '<b>Providers</b> reads/writes localStorage and shares language, theme, sound and progress with every component.',
+    sim: '<b>JourneySimulator</b> (the kernel) plays the current stage script: terminal lines, chat, files, preset answers, Details, Copy, tips, completion. In Quick mode, QuickCommandList renders instead.',
+    why: '<b>WhySection</b> explains the method. <b>DecisionGame</b> uses dnd-kit, and AppPreview reacts after each drop.',
+    tips: '<b>TipsSection</b> shows best-practice cards from the dictionary.',
+    footer: '<b>SiteFooter</b> has the sources, credits and unofficial-guide note.',
+    content: '<b>en.ts / vi.ts</b> are typed dictionaries with every word on the page. A missing VI key breaks the build on purpose.',
+    stages: '<b>stages.ts</b> holds 7 language-independent scripts: command, tab, terminal lines, files, interaction, tip.',
+    storage: '<b>localStorage</b> keys use the <code>skillguide:</code> prefix: lang, theme, sound, mode, progress.',
+    libs: '<b>Web Audio</b> makes the sounds, the <b>Clipboard API</b> powers the copy buttons, and <b>canvas-confetti</b> runs the completion moment.'
+  };
+  document.querySelectorAll('.an').forEach(n => n.onclick = () => { document.querySelectorAll('.an').forEach(x => x.classList.remove('active')); n.classList.add('active'); document.getElementById('ainfo').innerHTML = A[n.dataset.k]; });
+
+  const J = [
+    ['Opens the Vercel link.', 'Vercel sends the static page. Providers reads localStorage. On a first visit: Vietnamese, Guided mode, stage 1, light theme.'],
+    ['Sees the hero and the simulator.', 'Hero renders JourneySimulator with stages[currentStage].'],
+    ['Clicks Run.', 'The script plays: terminal lines one by one, files appear in devpost/, a sound plays. The stage is marked done and saved.'],
+    ['Picks a preset answer.', 'The answer text is inserted into DocPreview for that stage\'s document.'],
+    ['Opens Details, clicks Copy.', 'Details text comes from the dictionary. The Clipboard API copies the real command, and "Copied ✓" appears.'],
+    ['Moves to the next stage.', 'TipPopup shows if the stage has a tipKey.'],
+    ['Finishes stage 7.', 'canvas-confetti fires and the completion badge appears.'],
+    ['Scrolls down and drags cards.', 'Reveal fades sections in. dnd-kit moves cards, the score is recomputed, and AppPreview switches look.'],
+    ['Reads tips and the footer.', 'TipsSection and SiteFooter render from the dictionary.'],
+    ['Comes back tomorrow.', 'Providers restores skillguide:progress and shows "Welcome back, continue at stage X" with Start over.']
+  ];
+  let ji = 0; const steps = document.getElementById('steps');
+  J.forEach((_, i) => { const b = document.createElement('button'); b.textContent = String(i+1).padStart(2,'0'); b.onclick = () => sj(i); steps.appendChild(b); });
+  function sj(i) { ji = Math.max(0, Math.min(J.length-1, i)); steps.querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k===ji)); document.getElementById('sv').textContent = J[ji][0]; document.getElementById('sc').textContent = J[ji][1]; }
+  document.getElementById('prev').onclick = () => sj(ji-1); document.getElementById('next').onclick = () => sj(ji+1); sj(0);
+
+  function tabs(id) { const w = document.getElementById(id); w.querySelectorAll('button').forEach(b => b.onclick = () => { w.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); [...w.querySelectorAll('button')].forEach(x => document.getElementById(x.dataset.p).classList.toggle('on', x===b)); }); }
+  tabs('dtabs'); tabs('otabs');
+
+  document.querySelectorAll('.tree span').forEach(s => s.onclick = () => document.getElementById('tinfo').textContent = s.dataset.t);
+</script>
+</body>
+</html>

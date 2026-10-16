@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRD — Devpost Learn Skill Pack - How To Use (draft)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#FAFAF8; --bg-alt:#F3F0E9; --surface:#FFFFFF; --surface-2:#F1EEE7; --border:#E3DFD6; --border-strong:#D2CDC0;
+    --text:#171717; --muted:#55524B; --dim:#6E6B62; --faint:#8B877C;
+    --primary:#FF004D; --primary-strong:#990070; --secondary:#5546FF; --secondary-light:#6E4FE0;
+    --success:#16824F; --blue:#2563EB; --gold:#B8860B;
+    --shadow-sm:0 1px 3px rgba(0,0,0,.08); --shadow-md:0 4px 20px rgba(0,0,0,.10);
+    --ease:cubic-bezier(0.16,1,0.3,1);
+    --sans:"Geist","Segoe UI",system-ui,sans-serif; --mono:"Geist Mono",Consolas,monospace;
+  }
+  [data-theme="dark"] {
+    --bg:#0A0A0F; --bg-alt:#0D0D12; --surface:#131313; --surface-2:#1B1B1B; --border:#262626; --border-strong:#333;
+    --text:#F2F1EE; --muted:#A8A49A; --dim:#8F8B81; --faint:#6B675F;
+    --primary-strong:#FF5FA8; --secondary:#8B80FF; --secondary-light:#A79CFF; --success:#00D395; --blue:#60A5FA; --gold:#FFD700;
+    --shadow-sm:0 1px 3px rgba(0,0,0,.3); --shadow-md:0 4px 20px rgba(0,0,0,.35);
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:var(--sans); background:var(--bg); color:var(--text); line-height:1.6; transition:background .15s,color .15s; }
+  main { max-width:1100px; margin:0 auto; padding:40px 24px 96px; position:relative; }
+  .glow { position:absolute; top:-160px; left:50%; transform:translateX(-50%); width:800px; height:500px; background:radial-gradient(ellipse, color-mix(in srgb,var(--primary) 8%,transparent) 0%, transparent 70%); pointer-events:none; z-index:-1; }
+  .top { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+  .pill { display:inline-flex; align-items:center; gap:6px; background:color-mix(in srgb,var(--primary) 7%,transparent); border:1px solid color-mix(in srgb,var(--primary) 16%,transparent); border-radius:20px; padding:4px 14px; font-size:12px; font-weight:600; color:var(--primary); letter-spacing:.06em; text-transform:uppercase; }
+  .tbtn { width:34px; height:34px; border-radius:8px; border:1px solid var(--border); background:var(--surface); color:var(--muted); cursor:pointer; font-size:15px; }
+  .tbtn:hover { border-color:var(--primary); color:var(--primary); }
+  h1 { font-size:clamp(32px,5vw,52px); font-weight:800; letter-spacing:-.03em; line-height:1.1; margin:18px 0 14px; }
+  .grad { background:linear-gradient(90deg,var(--primary),var(--primary-strong)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  .lead { font-size:18px; color:var(--muted); max-width:760px; margin:0; }
+  h2 { font-size:clamp(24px,3vw,32px); font-weight:800; letter-spacing:-.03em; margin:0 0 8px; }
+  section { margin-top:72px; }
+  .sub { color:var(--dim); margin:0 0 24px; }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:24px; box-shadow:var(--shadow-sm); }
+  .badge { display:inline-flex; align-items:center; gap:5px; border-radius:8px; padding:3px 10px; font-size:12px; font-weight:600; }
+  .b-red { background:color-mix(in srgb,var(--primary) 9%,transparent); color:var(--primary); border:1px solid color-mix(in srgb,var(--primary) 19%,transparent); }
+  .b-violet { background:color-mix(in srgb,var(--secondary) 9%,transparent); color:var(--secondary-light); border:1px solid color-mix(in srgb,var(--secondary) 19%,transparent); }
+  .b-green { background:color-mix(in srgb,var(--success) 9%,transparent); color:var(--success); border:1px solid color-mix(in srgb,var(--success) 19%,transparent); }
+  .b-gray { background:rgba(127,127,127,.08); color:var(--muted); border:1px solid var(--border); }
+  code, .mono { font-family:var(--mono); font-size:.92em; }
+  code { background:var(--surface-2); border:1px solid var(--border); border-radius:6px; padding:1px 6px; }
+
+  /* journey diagram */
+  .journey { overflow-x:auto; }
+  .journey svg { min-width:900px; width:100%; height:auto; display:block; }
+  .jn { cursor:pointer; }
+  .jn rect { transition:fill .2s, stroke .2s; }
+  .jn:hover rect.box { stroke:var(--primary); }
+  .jn.active rect.box { fill:color-mix(in srgb,var(--primary) 10%,var(--surface)); stroke:var(--primary); }
+  .jn text { pointer-events:none; }
+
+  /* stage stepper */
+  .stepper { display:grid; grid-template-columns:260px 1fr; gap:20px; }
+  @media (max-width:800px){ .stepper { grid-template-columns:1fr; } }
+  .rail { display:flex; flex-direction:column; gap:6px; }
+  .rail button { text-align:left; font:inherit; font-size:14px; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:10px 14px; cursor:pointer; color:var(--muted); display:flex; gap:10px; align-items:center; transition:all .15s var(--ease); }
+  .rail button:hover { border-color:color-mix(in srgb,var(--primary) 40%,transparent); transform:translateX(2px); }
+  .rail button.on { color:var(--text); border-color:var(--primary); background:color-mix(in srgb,var(--primary) 6%,var(--surface)); font-weight:600; }
+  .rail .num { font-family:var(--mono); font-size:12px; color:var(--primary); font-weight:700; width:22px; }
+  .stage { position:relative; overflow:hidden; }
+  .stage .big { position:absolute; top:-26px; right:-6px; font-size:110px; font-weight:900; opacity:.05; }
+  .stage h3 { margin:6px 0 4px; font-size:22px; letter-spacing:-.02em; }
+  .stage .cmd { display:flex; align-items:center; gap:8px; margin:12px 0 16px; flex-wrap:wrap; }
+  .stage .cmd code { font-size:14px; padding:6px 10px; }
+  .row { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:8px; }
+  .mini { background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; }
+  .mini b { display:block; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--dim); margin-bottom:4px; }
+  .navbtns { display:flex; gap:8px; margin-top:18px; }
+  .btn { font:inherit; font-weight:700; font-size:14px; padding:10px 18px; border-radius:8px; cursor:pointer; transition:transform .15s var(--ease), background .15s; }
+  .btn:active { transform:scale(.97); }
+  .btn-primary { background:var(--primary); color:#fff; border:none; box-shadow:var(--shadow-sm); }
+  .btn-primary:hover { background:var(--primary-strong); }
+  .btn-outline { background:transparent; color:var(--muted); border:1px solid var(--border-strong); }
+  .bar { margin-top:20px; height:2px; border-radius:4px; background:linear-gradient(90deg, color-mix(in srgb,var(--primary) 40%,transparent), transparent); }
+
+  /* layout stack */
+  .stack { display:flex; flex-direction:column; gap:8px; max-width:560px; }
+  .stack details { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:12px 16px; }
+  .stack summary { cursor:pointer; font-weight:600; display:flex; align-items:center; gap:10px; }
+  .stack summary .n { font-family:var(--mono); color:var(--primary); font-size:12px; }
+  .stack details[open] { border-color:color-mix(in srgb,var(--primary) 30%,transparent); }
+  .stack .hero { border-left:4px solid var(--primary); }
+
+  /* look and feel */
+  .swatches { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:10px; }
+  .sw { border:1px solid var(--border); border-radius:12px; overflow:hidden; background:var(--surface); font-size:12px; }
+  .sw div { height:52px; }
+  .sw span { display:block; padding:6px 10px; font-family:var(--mono); color:var(--muted); }
+
+  /* tabs */
+  .tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+  .tabs button { font:inherit; font-size:14px; font-weight:600; background:var(--surface); color:var(--muted); border:1px solid var(--border); border-radius:999px; padding:7px 16px; cursor:pointer; }
+  .tabs button.on { background:var(--primary); color:#fff; border-color:var(--primary); }
+  .panel { display:none; } .panel.on { display:block; }
+  ul.check { list-style:none; padding:0; margin:0; }
+  ul.check li { padding:8px 0 8px 28px; position:relative; border-bottom:1px dashed var(--border); }
+  ul.check li:last-child { border-bottom:none; }
+  ul.check li::before { content:"☐"; position:absolute; left:4px; color:var(--primary); }
+
+  .states { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; }
+  .state { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px 16px; cursor:pointer; transition:all .2s var(--ease); }
+  .state:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:color-mix(in srgb,var(--primary) 25%,transparent); }
+  .state p { margin:6px 0 0; font-size:14px; color:var(--dim); display:none; }
+  .state.open p { display:block; }
+  .state h4 { margin:0; font-size:15px; }
+  .shift { border-left:4px solid var(--gold); }
+
+  .cols { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+  .cols h3 { margin:0 0 8px; font-size:16px; }
+  .cols ul { margin:0; padding-left:18px; }
+  .assume { border-left:4px solid var(--secondary); }
+  footer { margin-top:72px; color:var(--faint); font-size:13px; }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { transition-duration:.01ms !important; animation-duration:.01ms !important; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="glow"></div>
+  <div class="top">
+    <span class="pill">PRD · approved</span>
+    <button class="tbtn" id="theme" title="Toggle light/dark" aria-label="Toggle light/dark">◐</button>
+  </div>
+  <h1>Devpost Learn Skill Pack <span class="grad">— How To Use</span></h1>
+  <p class="lead">A single long-scrolling, bilingual (EN/VI) page that lets people <b>try</b> the Build With AI: Basics skill pack in a click-through simulator before using it for real. After that, it explains why the method works and how to use it well.</p>
+
+  <!-- Journey diagram -->
+  <section>
+    <span class="pill">The core journey</span>
+    <h2 style="margin-top:14px">From landing to "done", in one scroll</h2>
+    <p class="sub">Click a step to see what happens there.</p>
+    <div class="card journey">
+      <svg viewBox="0 0 1000 230" role="img" aria-label="Core journey diagram">
+        <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#FF004D"/></marker></defs>
+        <g id="jsvg"></g>
+      </svg>
+      <div id="jinfo" class="mini" style="margin-top:12px">← Click a step in the journey.</div>
+    </div>
+  </section>
+
+  <!-- Layout -->
+  <section>
+    <span class="pill">Screens &amp; layout</span>
+    <h2 style="margin-top:14px">One page, top to bottom</h2>
+    <p class="sub">The separate 6-step flow diagram from scope is merged into the hero. Each stage has its own Details panel.</p>
+    <div class="stack">
+      <details><summary><span class="n">01</span> Sticky navbar</summary><p>Page name, section links, EN/VI toggle, light/dark toggle, sound toggle.</p></details>
+      <details open class="hero"><summary><span class="n">02</span> Hero: headline + journey simulator <span class="badge b-red">top priority</span></summary><p>Headline on the left. On the right, the <b>Guided ⇄ I already know this</b> switch above the 7-stage simulator, or above the quick command list.</p></details>
+      <details><summary><span class="n">03</span> Why it works</summary><p>The method in our own words, plus the "Who makes the decisions?" drag-and-drop.</p></details>
+      <details><summary><span class="n">04</span> Best Practices &amp; Tips</summary><p>Tip cards drawn from the videos and the skill pack, in original wording.</p></details>
+      <details><summary><span class="n">05</span> Sources footer</summary><p>Credits and links to Joe's two videos and the skill pack.</p></details>
+    </div>
+  </section>
+
+  <!-- Stage stepper -->
+  <section>
+    <span class="pill">Journey simulator</span>
+    <h2 style="margin-top:14px">7 stages, one per real command</h2>
+    <p class="sub">Step through what each stage does in Guided mode.</p>
+    <div class="stepper">
+      <div class="rail" id="rail"></div>
+      <div class="card stage" id="stage"></div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3 style="margin:0 0 6px;font-size:16px">⚡ "I already know this" mode</h3>
+      <p style="margin:0;color:var(--dim)">The switch replaces the simulator with the 7 real commands. Each has a one-line description and a <b>Copy</b> button, so there's no simulation step. The chosen mode is remembered.</p>
+    </div>
+  </section>
+
+  <!-- Why -->
+  <section>
+    <span class="pill">Why it works</span>
+    <h2 style="margin-top:14px">"Who makes the decisions?"</h2>
+    <p class="sub">About 6 decision cards sit between two drop zones. A small app preview reacts after every drop.</p>
+    <div class="cols">
+      <div class="card"><h3>AI decides</h3><p style="margin:0;color:var(--dim)">More cards here → a bland, generic-looking app.</p></div>
+      <div class="card"><h3>You decide</h3><p style="margin:0;color:var(--dim)">More cards here → a distinctive, personal app.</p></div>
+      <div class="card"><h3>Cards (examples)</h3><p style="margin:0;color:var(--dim)">App name · main color · key features · style · audience · font. The example is original, not a copy of the videos' demo apps.</p></div>
+    </div>
+  </section>
+
+  <!-- Look and feel -->
+  <section>
+    <span class="pill">Look &amp; feel</span>
+    <h2 style="margin-top:14px">Borrowed from Mezo Taskify</h2>
+    <p class="sub">Style only; no Taskify name or logo. Light by default, dark via toggle. Try the ◐ button at the top.</p>
+    <div class="swatches">
+      <div class="sw"><div style="background:#FAFAF8"></div><span>bg #FAFAF8</span></div>
+      <div class="sw"><div style="background:#F3F0E9"></div><span>bg-alt #F3F0E9</span></div>
+      <div class="sw"><div style="background:#171717"></div><span>text #171717</span></div>
+      <div class="sw"><div style="background:#FF004D"></div><span>primary #FF004D</span></div>
+      <div class="sw"><div style="background:#990070"></div><span>strong #990070</span></div>
+      <div class="sw"><div style="background:#5546FF"></div><span>secondary #5546FF</span></div>
+      <div class="sw"><div style="background:#16824F"></div><span>success #16824F</span></div>
+      <div class="sw"><div style="background:#0A0A0F"></div><span>dark bg #0A0A0F</span></div>
+    </div>
+    <div class="cols" style="margin-top:16px">
+      <div class="card"><h3>Type</h3>Geist for UI and prose, <span class="mono">Geist Mono</span> for commands and numbers. Headlines are weight 800 with tight tracking, and one hero phrase uses the <span class="grad" style="font-weight:800">red→magenta gradient</span>.</div>
+      <div class="card"><h3>Shape &amp; badges</h3>Radii of 8 / 12 / 16px and soft shadows.<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px"><span class="badge b-red">● Stage 3</span><span class="badge b-violet">Guided</span><span class="badge b-green">✓ Done</span><span class="badge b-gray">EN / VI</span></div></div>
+      <div class="card"><h3>Motion &amp; sound</h3>Hero fades up on load, sections reveal on scroll, the simulator gently bobs, cards lift on hover, and buttons press in. Reduced motion is honored. Small sound effects play, with no music in this version.</div>
+    </div>
+  </section>
+
+  <!-- Criteria -->
+  <section>
+    <span class="pill">How we'll know it works</span>
+    <h2 style="margin-top:14px">Acceptance criteria</h2>
+    <div class="tabs" id="ctabs">
+      <button data-p="c1" class="on">Simulator</button>
+      <button data-p="c2">Quick list</button>
+      <button data-p="c3">Why</button>
+      <button data-p="c4">Tips</button>
+      <button data-p="c5">Toggles</button>
+    </div>
+    <div class="card">
+      <ul class="check panel on" id="c1">
+        <li>Clicking <b>Run</b> on each of the 7 stages plays a visible result in the simulated window.</li>
+        <li>On interview stages, picking a preset answer makes that answer's text appear in the matching document preview.</li>
+        <li>Each stage's file appears in the <code>devpost/</code> view at the stage that creates it.</li>
+        <li>Every <b>Copy</b> button puts the exact real command on the clipboard and shows "Copied ✓".</li>
+        <li>Every stage has a Details panel with its purpose, the file it creates, a tip, and an example.</li>
+        <li>Clicking a stage in the progress rail jumps to it.</li>
+        <li>Completing stage ⑦ shows the completion moment.</li>
+      </ul>
+      <ul class="check panel" id="c2">
+        <li>Flipping the switch shows all 7 commands without any simulation step.</li>
+        <li>Each Copy button copies the exact command.</li>
+        <li>Reloading the page keeps the chosen mode.</li>
+      </ul>
+      <ul class="check panel" id="c3">
+        <li>Each card can be dragged into either zone and back.</li>
+        <li>The preview visibly changes after every drop.</li>
+        <li>All cards on "AI decides" shows the generic version, and all on "You decide" shows the personal version.</li>
+      </ul>
+      <ul class="check panel" id="c4">
+        <li>Every tip is readable in both EN and VI.</li>
+        <li>No text is copied verbatim from the video transcripts.</li>
+      </ul>
+      <ul class="check panel" id="c5">
+        <li>Switching language changes every visible text, with no leftover strings in the other language.</li>
+        <li>Theme and sound toggles work and persist across reloads.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- States -->
+  <section>
+    <span class="pill">States &amp; boundaries</span>
+    <h2 style="margin-top:14px">What if…?</h2>
+    <p class="sub">Click a card to reveal what happens.</p>
+    <div class="states" id="states">
+      <div class="state"><h4>First visit</h4><p>Vietnamese, Guided mode, stage ①, light theme.</p></div>
+      <div class="state shift"><h4>Returning visit <span class="badge b-red" style="font-size:11px">changed from scope</span></h4><p>Opens at the saved stage with "Welcome back, continue at stage X" and a <b>Start over</b> button. Progress is saved in the visitor's own browser only: no account, no server. Scope had cut "saved progress" on the assumption that it needed accounts.</p></div>
+      <div class="state"><h4>Journey complete</h4><p>Completion moment, all stages checked, Start over available.</p></div>
+      <div class="state"><h4>Copy blocked</h4><p>If the browser blocks the clipboard, the command text is selected so the visitor can copy it manually.</p></div>
+      <div class="state"><h4>Sound</h4><p>Plays only after the visitor's first click (browser rule) and respects mute.</p></div>
+      <div class="state"><h4>Reduced motion</h4><p>Animations are minimized when the visitor's system asks for it.</p></div>
+      <div class="state"><h4>Browser data cleared</h4><p>Progress and preferences reset. Nothing persists beyond this browser.</p></div>
+    </div>
+  </section>
+
+  <!-- Decisions / boundary -->
+  <section>
+    <span class="pill">Decisions &amp; boundary</span>
+    <h2 style="margin-top:14px">What's in, what waits</h2>
+    <div class="tabs" id="btabs">
+      <button data-p="d1" class="on">Your decisions</button>
+      <button data-p="d2">Building now</button>
+      <button data-p="d3">Deferred</button>
+      <button data-p="d4">Later</button>
+      <button data-p="d5">Non-goals</button>
+    </div>
+    <div class="card">
+      <ul class="check panel on" id="d1">
+        <li>Name: <b>Devpost Learn Skill Pack - How To Use</b></li>
+        <li>One long scrolling page, like the Taskify landing page</li>
+        <li>Walkthrough lives in the hero</li>
+        <li>Run button only, no typing</li>
+        <li>Preset interview answers</li>
+        <li>7 stages, one per real command (proposed by Claude, accepted)</li>
+        <li>Guided ⇄ "I already know this" switch, plus a copy button on every stage</li>
+        <li>Remember the stage in progress</li>
+        <li>Flow diagram merged into per-stage Details (proposed by Claude at your request)</li>
+        <li>Visual style from Mezo Taskify</li>
+      </ul>
+      <ul class="check panel" id="d2">
+        <li>Hero journey simulator: 7 stages, Run, preset answers, simulated Terminal / Claude Code / devpost/ views, Details, copy buttons, tip pop-ups, completion moment</li>
+        <li>Guided ⇄ Quick command list switch</li>
+        <li>Saved progress and preferences in the visitor's browser</li>
+        <li>"Why it works" with the drag-and-drop</li>
+        <li>Best Practices &amp; Tips cards</li>
+        <li>EN/VI, light/dark, sound toggles</li>
+        <li>Sources footer</li>
+      </ul>
+      <ul class="check panel" id="d3">
+        <li>Typing commands yourself: Run is enough to prove the kernel</li>
+        <li>Free-text interview answers: presets keep it easy</li>
+        <li>Separate 6-step flow diagram section: merged into the hero</li>
+      </ul>
+      <ul class="check panel" id="d4">
+        <li>Charts (typing ≈40 vs. speaking ≈130 wpm)</li>
+        <li>Background music</li>
+        <li>Mini-game and comprehension checks</li>
+        <li>More sample projects in the simulator</li>
+      </ul>
+      <ul class="check panel" id="d5">
+        <li>Running real commands or a real agent in the browser</li>
+        <li>Copying video transcripts verbatim</li>
+        <li>Accounts, login, server, cross-device sync</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Assumptions & open questions -->
+  <section>
+    <span class="pill">Needs your confirmation</span>
+    <h2 style="margin-top:14px">Assumptions &amp; open questions</h2>
+    <div class="cols">
+      <div class="card assume"><h3>Assumptions</h3><ul>
+        <li><b>Default language is Vietnamese</b> on first visit, then the visitor's choice is remembered. This was your decision at spec review.</li>
+        <li>Sound is on by default after the first click, with mute available.</li>
+        <li>Desktop-first. It stays readable on a phone, but the simulator is optimized for desktop.</li>
+      </ul></div>
+      <div class="card"><h3>Open questions</h3><ul>
+        <li>None left. The sample project was settled in spec: an English vocabulary flashcard app for Vietnamese learners. The "unofficial community guide" label was confirmed.</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <footer>Visual companion to <code>devpost/prd.md</code>. The Markdown file is canonical.</footer>
+</main>
+<script>
+  // theme
+  document.getElementById('theme').onclick = () => {
+    const r = document.documentElement;
+    r.dataset.theme = r.dataset.theme === 'dark' ? '' : 'dark';
+  };
+
+  // journey diagram
+  const J = [
+    ['Land on hero', 'Headline on the left; the Guided ⇄ "I already know this" switch and the simulator on the right.'],
+    ['Run a stage', 'Click <b>Run</b>. The simulated Terminal / Claude Code / devpost/ view plays the result.'],
+    ['Pick an answer', 'On interview stages, choose a preset answer and watch it appear in the generated document.'],
+    ['Details + Copy', 'Open Details (purpose, file, tip, example) and copy the real command.'],
+    ['7 stages done', 'Repeat through ① Install … ⑦ /6-ship. Completion moment: confetti + badge.'],
+    ['Why it works', 'Scroll down and drag decision cards between "AI decides" and "You decide".'],
+    ['Tips → Sources', 'Read the best-practice cards, then the credits and links.'],
+    ['Come back', 'Reload or return later: the simulator reopens at the saved stage.']
+  ];
+  const g = document.getElementById('jsvg'); const ns = 'http://www.w3.org/2000/svg';
+  J.forEach((s, i) => {
+    const x = 10 + i * 124, y = i === 7 ? 150 : 60;
+    const node = document.createElementNS(ns, 'g'); node.setAttribute('class', 'jn'); node.dataset.i = i;
+    node.innerHTML = `<rect class="box" x="${x}" y="${y}" width="108" height="64" rx="12" fill="var(--surface-2)" stroke="var(--border-strong)"/>
+      <text x="${x+54}" y="${y+26}" text-anchor="middle" font-family="Geist Mono, monospace" font-size="11" fill="#FF004D" font-weight="700">${String(i+1).padStart(2,'0')}</text>
+      <text x="${x+54}" y="${y+46}" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">${s[0]}</text>`;
+    node.style.color = 'var(--text)';
+    g.appendChild(node);
+    if (i < 6) { const l = document.createElementNS(ns,'line'); l.setAttribute('x1',x+108); l.setAttribute('y1',92); l.setAttribute('x2',x+122); l.setAttribute('y2',92); l.setAttribute('stroke','#FF004D'); l.setAttribute('stroke-width','2'); l.setAttribute('marker-end','url(#ar)'); g.appendChild(l); }
+    node.onclick = () => { document.querySelectorAll('.jn').forEach(n=>n.classList.remove('active')); node.classList.add('active'); document.getElementById('jinfo').innerHTML = `<b>${String(i+1).padStart(2,'0')} · ${s[0]}</b>${s[1]}`; };
+  });
+  const back = document.createElementNS(ns,'path'); back.setAttribute('d','M 932 182 C 990 182, 990 20, 60 20 L 60 56'); back.setAttribute('fill','none'); back.setAttribute('stroke','var(--faint)'); back.setAttribute('stroke-dasharray','5 5'); back.setAttribute('marker-end','url(#ar)'); g.appendChild(back);
+  const loopL = document.createElementNS(ns,'path'); loopL.setAttribute('d','M 486 124 C 486 150, 150 150, 150 128'); loopL.setAttribute('fill','none'); loopL.setAttribute('stroke','#5546FF'); loopL.setAttribute('stroke-dasharray','4 4'); loopL.setAttribute('marker-end','url(#ar)'); g.appendChild(loopL);
+  const lt = document.createElementNS(ns,'text'); lt.setAttribute('x','318'); lt.setAttribute('y','166'); lt.setAttribute('text-anchor','middle'); lt.setAttribute('font-size','11'); lt.setAttribute('fill','#5546FF'); lt.textContent='repeat for each of the 7 stages'; g.appendChild(lt);
+
+  // stages
+  const S = [
+    ['Install', 'npx skills add challengepost/learn-ai-basics --all -y', 'Terminal', 'Create an empty project folder, then install. Output plays; 6 skill folders pop in under .agents/skills/.', '— (installs .agents/skills/)', 'Run it inside a folder set aside for this project.', 'Run'],
+    ['/1-start', '/1-start', 'Claude Code', 'The agent asks about your experience. Pick a preset answer.', 'learner-profile.md', 'Say your real level. The agent calibrates explanations to it.', 'Preset answer'],
+    ['/2-scope', '/2-scope', 'Claude Code', 'The agent asks for your idea. Pick a preset answer; scope.md fills in.', 'scope.md', 'Brain-dump with speech-to-text. More context means a less generic result.', 'Preset answer'],
+    ['/3-prd', '/3-prd', 'Claude Code', 'The agent asks what the first screen shows. Pick an answer; prd.md fills in.', 'prd.md', 'Let it surface the edge cases you hadn\'t thought of.', 'Preset answer'],
+    ['/4-spec', '/4-spec', 'Claude Code', 'The agent asks about tech choices. Pick an answer; spec.md fills in.', 'spec.md', 'Ask "what are the options and why?" for anything unfamiliar.', 'Preset answer'],
+    ['/5-build', '/5-build', 'devpost/ + preview', 'Checklist ticks off; at a checkpoint click Approve or Request a change.', 'checklist.md', 'Stop at checkpoints and actually look. Catch mistakes early.', 'Approve / Request change'],
+    ['/6-ship', '/6-ship', 'Terminal', 'A security check finds a fake API key → click Fix. Then GitHub push, demo checklist, completion moment 🎉.', '— (final review)', 'Write your submission yourself, in your own voice.', 'Fix → finish']
+  ];
+  const rail = document.getElementById('rail'), stage = document.getElementById('stage');
+  let cur = 0;
+  function show(i) {
+    cur = i; const s = S[i];
+    rail.querySelectorAll('button').forEach((b, j) => b.classList.toggle('on', j === i));
+    stage.innerHTML = `<div class="big">0${i+1}</div>
+      <span class="badge b-violet">${s[2]}</span> <span class="badge b-gray">Action: ${s[6]}</span>
+      <h3>Stage ${i+1} · ${s[0]}</h3>
+      <div class="cmd"><code>${s[1]}</code><span class="badge b-red">📋 Copy real command</span></div>
+      <div class="row">
+        <div class="mini"><b>What happens</b>${s[3]}</div>
+        <div class="mini"><b>File created</b><span class="mono">${s[4]}</span></div>
+        <div class="mini"><b>Tip</b>${s[5]}</div>
+      </div>
+      <div class="navbtns">
+        <button class="btn btn-outline" ${i===0?'disabled style="opacity:.4"':''} onclick="show(${i-1})">← Back</button>
+        <button class="btn btn-primary" onclick="show(${Math.min(i+1,6)})">${i===6?'Done ✓':'Next stage →'}</button>
+      </div>
+      <div class="bar"></div>`;
+  }
+  S.forEach((s, i) => { const b = document.createElement('button'); b.innerHTML = `<span class="num">0${i+1}</span>${s[0]}`; b.onclick = () => show(i); rail.appendChild(b); });
+  show(0);
+
+  // tabs
+  function tabs(id) {
+    const wrap = document.getElementById(id);
+    wrap.querySelectorAll('button').forEach(b => b.onclick = () => {
+      wrap.querySelectorAll('button').forEach(x => x.classList.remove('on')); b.classList.add('on');
+      const ids = [...wrap.querySelectorAll('button')].map(x => x.dataset.p);
+      ids.forEach(p => document.getElementById(p).classList.toggle('on', p === b.dataset.p));
+    });
+  }
+  tabs('ctabs'); tabs('btabs');
+
+  // states
+  document.querySelectorAll('.state').forEach(s => s.onclick = () => s.classList.toggle('open'));
+</script>
+</body>
+</html>

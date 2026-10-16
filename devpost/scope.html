@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scope — Skill Pack Guide (draft)</title>
+<style>
+  :root {
+    --bg: #0f1222; --panel: #181c33; --ink: #e9ecff; --muted: #9aa3c7;
+    --a: #7c9cff; --b: #ffb86b; --c: #5ee0b0; --d: #ff7a9a; --line: #2a3060;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+  main { max-width: 980px; margin: 0 auto; padding: 40px 20px 80px; }
+  .tag { display: inline-block; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; background: #2b2f55; color: var(--b); }
+  h1 { font-size: 40px; margin: 12px 0 6px; }
+  h2 { font-size: 22px; margin: 40px 0 12px; }
+  .lead { color: var(--muted); font-size: 18px; max-width: 760px; }
+  .kernel { margin-top: 28px; padding: 22px 24px; border-radius: 16px; background: linear-gradient(135deg, #24306b, #3a2456); border: 1px solid #4a4f8f; }
+  .kernel strong { color: var(--b); }
+  .kernel blockquote { margin: 12px 0 0; padding-left: 14px; border-left: 3px solid var(--b); color: #cfd4f5; font-style: italic; }
+  .kernel blockquote small { display: block; font-style: normal; color: var(--muted); margin-top: 4px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+  .card h3 { margin: 0 0 8px; font-size: 16px; color: var(--a); }
+  .card small { color: var(--muted); }
+  svg { width: 100%; height: auto; display: block; }
+  .node { cursor: pointer; }
+  .node rect { transition: filter .15s; }
+  .node:hover rect, .node.active rect { filter: brightness(1.25); }
+  .node text { pointer-events: none; }
+  #nodeInfo { min-height: 64px; margin-top: 10px; padding: 14px 18px; border-radius: 12px; background: #141833; border: 1px dashed var(--line); color: #cfd4f5; }
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .tabs button { font: inherit; color: var(--ink); background: #20254a; border: 1px solid var(--line); padding: 8px 16px; border-radius: 999px; cursor: pointer; }
+  .tabs button.on[data-k="now"] { background: var(--c); color: #072a1e; border-color: var(--c); }
+  .tabs button.on[data-k="later"] { background: var(--b); color: #3a1f00; border-color: var(--b); }
+  .tabs button.on[data-k="cut"] { background: var(--d); color: #3b0614; border-color: var(--d); }
+  .bucket { display: none; } .bucket.on { display: block; }
+  .bucket li { margin: 8px 0; }
+  details { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 18px; margin: 10px 0; }
+  summary { cursor: pointer; font-weight: 600; }
+  details[open] summary { color: var(--a); }
+  a { color: var(--a); }
+  .done { border-left: 4px solid var(--c); }
+  .rank { display:inline-block; min-width: 26px; text-align:center; font-weight:700; color:#072a1e; background: var(--c); border-radius: 6px; margin-right: 8px; }
+  footer { margin-top: 48px; color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <span class="tag">Scope · approved</span>
+  <h1>Skill Pack Guide <span style="font-size:16px;color:var(--muted)">(working title)</span></h1>
+  <p class="lead">A bilingual (English–Vietnamese), <b>interactive</b> website that walks people step by step through the Build With AI: Basics skill pack: where to go, which command to type, what they'll see. Only after that does it explain the method behind it and the tips.</p>
+
+  <div class="kernel">
+    <strong>The kernel:</strong> Learn by <b>trying it on the page</b>, not just reading. The user steps through a simulated walkthrough and sees in advance what they'll type and how the agent will respond, before doing it for real on their own machine.
+    <blockquote>"phần key và quan trọng nhất vẫn là interactive hướng dẫn người dùng cách dùng Skill ra sao, vào đâu, gõ dòng lệnh nào, rồi sau đó mới là giải thích lý do, cho best practice, Tips"
+      <small>The key and most important part is an interactive guide to how to use the Skills: where to go, which command to type. Only after that come the reasons, best practices, and tips.</small></blockquote>
+  </div>
+
+  <h2>User → Core loop → Proof it works</h2>
+  <p style="color:var(--muted);margin-top:-4px">Click any block for details.</p>
+  <svg viewBox="0 0 940 300" role="img" aria-label="Diagram of the user, the core loop, and the proof">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#7c9cff"/></marker>
+    </defs>
+    <g class="node" data-i="user">
+      <rect x="10" y="100" width="180" height="90" rx="14" fill="#2a3470" stroke="#7c9cff"/>
+      <text x="100" y="138" text-anchor="middle" fill="#e9ecff" font-size="16" font-weight="700">The user</text>
+      <text x="100" y="160" text-anchor="middle" fill="#9aa3c7" font-size="12">has ideas, unsure where to start</text>
+    </g>
+    <line x1="190" y1="145" x2="236" y2="145" stroke="#7c9cff" stroke-width="2" marker-end="url(#arr)"/>
+    <g class="node" data-i="s1">
+      <rect x="240" y="40" width="150" height="70" rx="12" fill="#1f4a3e" stroke="#5ee0b0"/>
+      <text x="315" y="70" text-anchor="middle" fill="#e9ecff" font-size="14" font-weight="700">① Walkthrough</text>
+      <text x="315" y="90" text-anchor="middle" fill="#9aa3c7" font-size="12">where to go · what to type</text>
+    </g>
+    <g class="node" data-i="s2">
+      <rect x="410" y="40" width="150" height="70" rx="12" fill="#1f3f5a" stroke="#7c9cff"/>
+      <text x="485" y="70" text-anchor="middle" fill="#e9ecff" font-size="14" font-weight="700">② 6-step flow</text>
+      <text x="485" y="90" text-anchor="middle" fill="#9aa3c7" font-size="12">click for details</text>
+    </g>
+    <g class="node" data-i="s3">
+      <rect x="410" y="180" width="150" height="70" rx="12" fill="#4a2f1f" stroke="#ffb86b"/>
+      <text x="485" y="210" text-anchor="middle" fill="#e9ecff" font-size="14" font-weight="700">③ Why</text>
+      <text x="485" y="230" text-anchor="middle" fill="#9aa3c7" font-size="12">drag "Who decides?"</text>
+    </g>
+    <g class="node" data-i="s4">
+      <rect x="240" y="180" width="150" height="70" rx="12" fill="#4a1f33" stroke="#ff7a9a"/>
+      <text x="315" y="210" text-anchor="middle" fill="#e9ecff" font-size="14" font-weight="700">④ Tips</text>
+      <text x="315" y="230" text-anchor="middle" fill="#9aa3c7" font-size="12">best practices</text>
+    </g>
+    <line x1="390" y1="75" x2="406" y2="75" stroke="#7c9cff" stroke-width="2" marker-end="url(#arr)"/>
+    <line x1="485" y1="110" x2="485" y2="176" stroke="#7c9cff" stroke-width="2" marker-end="url(#arr)"/>
+    <line x1="410" y1="215" x2="394" y2="215" stroke="#7c9cff" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M240,215 C200,215 205,90 236,78" fill="none" stroke="#5a6299" stroke-width="1.5" stroke-dasharray="5 5" marker-end="url(#arr)"/>
+    <text x="120" y="250" fill="#9aa3c7" font-size="11">come back while doing it for real</text>
+    <line x1="560" y1="145" x2="706" y2="145" stroke="#7c9cff" stroke-width="2" marker-end="url(#arr)"/>
+    <g class="node" data-i="proof">
+      <rect x="710" y="95" width="220" height="100" rx="14" fill="#2c2a5a" stroke="#ffb86b"/>
+      <text x="820" y="132" text-anchor="middle" fill="#ffb86b" font-size="16" font-weight="700">Proof</text>
+      <text x="820" y="154" text-anchor="middle" fill="#e9ecff" font-size="12">the 6-step journey "runs"</text>
+      <text x="820" y="172" text-anchor="middle" fill="#e9ecff" font-size="12">in front of the viewer</text>
+    </g>
+    <g class="node" data-i="lang">
+      <rect x="600" y="20" width="90" height="36" rx="18" fill="#20254a" stroke="#9aa3c7"/>
+      <text x="645" y="43" text-anchor="middle" fill="#e9ecff" font-size="13" font-weight="700">EN ⇄ VI</text>
+    </g>
+  </svg>
+  <div id="nodeInfo">← Click a block in the diagram.</div>
+
+  <h2>Who, and why</h2>
+  <div class="grid">
+    <div class="card"><h3>Who it's for</h3>People who want to build products with AI and have plenty of ideas but don't know where to start or what flow of thinking to follow. Includes beginners and coders who lack a systematic method for building an MVP.</div>
+    <div class="card"><h3>What they do today</h3>Watch long English-language videos or read the hackathon page and figure it out themselves.</div>
+    <div class="card"><h3>Why you're building it</h3>"người dùng đọc lại là biết cách dùng Skill như thế nào…"<br><small>Readers come away knowing how to use the Skills, how to use them effectively, the method behind them, and concrete examples.</small></div>
+  </div>
+
+  <h2>What "working" looks like</h2>
+  <div class="card done">
+    Open the site in a browser → switch EN/VI → go through the whole interactive walkthrough from creating a folder to <code>/6-ship</code>, each step with a copyable command and a simulated result → click a step in the flow diagram to open its details → in the "why" section, drag decision cards between "AI" and "You" and watch an app preview change.
+    <p style="margin-bottom:0"><b style="color:var(--b)">The "oh, that's cool" moment:</b> the viewer watches the whole 6-step journey "run" in front of them as if they were using it for real.</p>
+  </div>
+
+  <h2>Proof-of-concept boundary</h2>
+  <div class="tabs">
+    <button data-k="now" class="on">Now</button>
+    <button data-k="later">Later</button>
+    <button data-k="cut">Cut</button>
+  </div>
+  <div class="card">
+    <ul class="bucket on" id="b-now">
+      <li><span class="rank">1</span><b>Interactive step-by-step walkthrough</b>: where to go, which command to type (copyable), simulated response.</li>
+      <li><span class="rank">2</span><b>Clickable 6-step flow diagram</b>. Each step shows what it does, which file it creates in <code>devpost/</code>, a tip, and a concrete example.</li>
+      <li><span class="rank">3</span><b>Why</b>: flipped interaction, cognitive debt, writing things down as memory, building in small steps, plus the "Who makes the decisions?" drag-and-drop.</li>
+      <li><span class="rank">4</span><b>Best practices &amp; tips</b>: speech-to-text, <code>/clear</code> between steps, write your own submission, never expose API keys…</li>
+      <li><span class="rank">✓</span><b>Bilingual EN/VI</b> with a toggle.</li>
+      <li><span class="rank">✓</span>Small sound effects (click / drop / complete) with a mute toggle.</li>
+    </ul>
+    <ul class="bucket" id="b-later">
+      <li>Charts (typing 40 vs. speaking 130 words per minute, etc.).</li>
+      <li>Background music.</li>
+      <li>Mini-game: drag the 6 steps into the right order; comprehension checks.</li>
+    </ul>
+    <ul class="bucket" id="b-cut">
+      <li><b>Running real commands in the browser</b>: simulation only. Users run the real thing on their own machine, which is safe and simple.</li>
+      <li><b>Copying video transcripts verbatim</b>: to respect copyright, we rewrite in our own words and link to the videos.</li>
+      <li><b>Accounts/login, backend, saved progress</b>: not needed to prove the kernel.</li>
+    </ul>
+  </div>
+
+  <h2>Inspiration &amp; sources</h2>
+  <details>
+    <summary>Desired style</summary>
+    <p>Beautiful, interactive, easy to use. "The more interactivity, charts, flows, sound and music, the better." Look &amp; feel details get pinned down in the PRD.</p>
+  </details>
+  <details>
+    <summary>Content sources (rewritten in our own words, with links)</summary>
+    <ul>
+      <li>Joe, "Stop Building Generic AI Apps: The Flipped Interaction Method": <a href="https://www.youtube.com/watch?v=sooC4QGFUUs">youtube.com/watch?v=sooC4QGFUUs</a></li>
+      <li>Joe, live build of "Who Let The Dogs Out": <a href="https://www.youtube.com/watch?v=0Zi0OkKTZqM">youtube.com/watch?v=0Zi0OkKTZqM</a></li>
+      <li>The actual skills in <code>.agents/skills/</code>: the authoritative source for command names and the documents each step produces.</li>
+    </ul>
+  </details>
+
+  <footer>Visual companion to <code>devpost/scope.md</code>. The Markdown file is canonical.</footer>
+</main>
+<script>
+  const info = {
+    user: "<b>The user:</b> has plenty of ideas for building with AI but doesn't know where to start. Some are beginners; some already code but lack a systematic method.",
+    s1: "<b>① Interactive walkthrough (top priority):</b> create a folder → <code>npx skills add …</code> → <code>/1-start</code> … <code>/6-ship</code>. Copyable commands, simulated agent responses.",
+    s2: "<b>② 6-step flow diagram:</b> click a step to see what it does, which file it creates in <code>devpost/</code>, a tip, and a concrete example.",
+    s3: "<b>③ Why:</b> flipped interaction, cognitive debt, documents as \"memory\", building in small steps. Includes dragging decision cards between \"AI\" and \"You\".",
+    s4: "<b>④ Tips:</b> speech-to-text, <code>/clear</code> between steps, ask the AI to research inspiration, never expose API keys, write your own submission.",
+    proof: "<b>Proof it works:</b> in the demo video, the viewer watches the whole 6-step journey \"run\" in front of them as if they were using it for real.",
+    lang: "<b>Bilingual:</b> one EN ⇄ VI toggle for the whole page."
+  };
+  document.querySelectorAll('.node').forEach(n => n.addEventListener('click', () => {
+    document.querySelectorAll('.node').forEach(x => x.classList.remove('active'));
+    n.classList.add('active');
+    document.getElementById('nodeInfo').innerHTML = info[n.dataset.i];
+  }));
+  document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.tabs button').forEach(x => x.classList.remove('on'));
+    document.querySelectorAll('.bucket').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    document.getElementById('b-' + b.dataset.k).classList.add('on');
+  }));
+</script>
+</body>
+</html>
