@@ -52,7 +52,8 @@ Unverified: exact current versions of Next.js, Tailwind, and dnd-kit were not lo
 - **Production build check:** `npm run build` → static files in `out/`.
 - **Demo recording:** record the local or Vercel version: run a few simulator stages, pick a preset answer and show it appear in the document, copy a command, flip to Quick mode, switch EN/VI, play the drag-and-drop, reload to show the stage is remembered.
 - **Submission:** short demo video + public GitHub repository (both required).
-- **Deployment (learner's choice): Vercel** — import the GitHub repo into Vercel; it detects Next.js. Steps finalized in `6-ship`.
+- **Deployment (learner's choice): Vercel** — live at https://devpost-learn-skill-pack-how-to-use.vercel.app (Vercel project `devpost-learn-skill-pack-how-to-use`, deployed with the Vercel CLI from the local folder; `.vercelignore` keeps private files out of the upload). Not yet connected to the GitHub repo for automatic deploys — redeploy with `npx vercel deploy --prod`, or connect the repo in the Vercel dashboard.
+- **Public repository:** https://github.com/KelvinTrinhSG/Devpost-Learn-Skill-Pack---How-To-Use
 
 ## Look and Feel
 Carried forward from `prd.md > Look and Feel` (style of Mezo Taskify; no Taskify name/logo).

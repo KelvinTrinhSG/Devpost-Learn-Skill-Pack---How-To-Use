@@ -1,0 +1,9 @@
+# Keep private and local-only files out of Vercel CLI uploads
+/devpost/learner-profile.md
+.env
+.env.*
+/.claude
+/agent
+/node_modules
+/.next
+/out
