@@ -352,6 +352,64 @@ export const en = {
       body: "Read each document before saying \"looks good\". Fixing a plan costs a sentence; fixing built code costs much more.",
     },
   },
+  why: {
+    label: "Why it works",
+    title: "You make the decisions. The agent does the typing.",
+    intro:
+      "The skill pack isn't a faster way to ask for an app. It's a method that keeps you in charge of what gets built — and makes the result yours.",
+    points: [
+      {
+        title: "Flipped interaction",
+        body: "Instead of you writing the perfect prompt, the agent interviews you — one question at a time. The ideas and choices come from you.",
+      },
+      {
+        title: "No cognitive debt",
+        body: "If an agent builds things you never thought through, you end up owning an app you don't understand. Planning together first keeps you the owner.",
+      },
+      {
+        title: "Documents are memory",
+        body: "Agents forget between conversations. scope.md, prd.md, spec.md and checklist.md carry every decision forward, so a fresh chat loses nothing.",
+      },
+      {
+        title: "Small, reviewed steps",
+        body: "Build one working slice, check it, commit it, repeat. Problems show up early, and there is always a version that works.",
+      },
+    ],
+    game: {
+      title: "Who makes the decisions?",
+      intro:
+        "Drag each decision to AI or to You and watch the app change. Keyboard: Tab to a card, Space to pick it up, arrow keys to move, Space to drop.",
+      tray: "Not decided yet",
+      zoneAi: "🤖 AI decides",
+      zoneYou: "🙋 You decide",
+      dropHere: "Drop here",
+      reset: "Reset",
+      cards: {
+        name: "App name",
+        color: "Main color",
+        features: "Key features",
+        style: "Visual style",
+        audience: "Audience",
+        font: "Font",
+      },
+      count: "AI: {ai} · You: {you} · Undecided: {tray}",
+      verdicts: {
+        generic: "Generic — looks like a thousand other apps",
+        mixed: "Getting there — some of it is yours",
+        personal: "Personal — nobody else would build this",
+      },
+      preview: {
+        aiName: "VocabMaster AI",
+        youName: "Hát Là Nhớ",
+        aiTagline: "Learn vocabulary smarter. For everyone.",
+        youTagline: "English words for Vietnamese teens who learn by singing.",
+        aiFeatures: ["Flashcards", "Quizzes", "Daily goals"],
+        youFeatures: ["Words from your favorite songs", "Sing-along mode", "Vietnamese sound hints"],
+        start: "Get started",
+        youStart: "Play a song ♪",
+      },
+    },
+  },
   completion: {
     badge: "Journey complete!",
     body: "You've seen all 7 steps. Now make a new empty folder and run them for real.",

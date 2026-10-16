@@ -338,6 +338,64 @@ export const vi: Dictionary = {
       body: "Đọc từng tài liệu trước khi nói \"ổn rồi\". Sửa kế hoạch chỉ tốn một câu; sửa code đã build tốn hơn nhiều.",
     },
   },
+  why: {
+    label: "Vì sao hiệu quả",
+    title: "Bạn ra quyết định. Agent lo phần gõ code.",
+    intro:
+      "Bộ skill không phải cách nhanh hơn để \"xin\" một cái app. Đó là một phương pháp giữ bạn làm chủ những gì được build — và làm cho kết quả mang dấu ấn của bạn.",
+    points: [
+      {
+        title: "Đảo chiều tương tác",
+        body: "Thay vì bạn phải viết một câu lệnh hoàn hảo, agent phỏng vấn bạn — mỗi lần một câu. Ý tưởng và lựa chọn đều đến từ bạn.",
+      },
+      {
+        title: "Không \"nợ nhận thức\"",
+        body: "Nếu agent build những thứ bạn chưa từng nghĩ kỹ, bạn sẽ sở hữu một app mà chính mình không hiểu. Cùng lên kế hoạch trước giúp bạn vẫn là người làm chủ.",
+      },
+      {
+        title: "Tài liệu là bộ nhớ",
+        body: "Agent quên sạch giữa các cuộc trò chuyện. scope.md, prd.md, spec.md và checklist.md mang mọi quyết định đi tiếp, nên mở chat mới cũng không mất gì.",
+      },
+      {
+        title: "Bước nhỏ, có kiểm tra",
+        body: "Build một lát chạy được, kiểm tra, commit, rồi lặp lại. Vấn đề lộ ra sớm, và lúc nào cũng có một phiên bản chạy được.",
+      },
+    ],
+    game: {
+      title: "Ai ra quyết định?",
+      intro:
+        "Kéo từng quyết định sang AI hoặc Bạn và xem app thay đổi. Bàn phím: Tab đến thẻ, Space để nhấc, phím mũi tên để di chuyển, Space để thả.",
+      tray: "Chưa quyết định",
+      zoneAi: "🤖 AI quyết",
+      zoneYou: "🙋 Bạn quyết",
+      dropHere: "Thả vào đây",
+      reset: "Đặt lại",
+      cards: {
+        name: "Tên app",
+        color: "Màu chủ đạo",
+        features: "Tính năng chính",
+        style: "Phong cách",
+        audience: "Đối tượng",
+        font: "Phông chữ",
+      },
+      count: "AI: {ai} · Bạn: {you} · Chưa quyết: {tray}",
+      verdicts: {
+        generic: "Chung chung — giống hàng nghìn app khác",
+        mixed: "Đang tới — đã có phần là của bạn",
+        personal: "Cá nhân — không ai khác build ra được",
+      },
+      preview: {
+        aiName: "VocabMaster AI",
+        youName: "Hát Là Nhớ",
+        aiTagline: "Học từ vựng thông minh hơn. Dành cho mọi người.",
+        youTagline: "Từ vựng tiếng Anh cho teen Việt học bằng cách hát.",
+        aiFeatures: ["Flashcard", "Trắc nghiệm", "Mục tiêu mỗi ngày"],
+        youFeatures: ["Từ vựng trong bài hát bạn thích", "Chế độ hát theo", "Gợi ý phát âm kiểu Việt"],
+        start: "Bắt đầu",
+        youStart: "Mở một bài hát ♪",
+      },
+    },
+  },
   completion: {
     badge: "Hoàn thành hành trình!",
     body: "Bạn đã xem đủ 7 bước. Giờ hãy tạo một thư mục trống mới và chạy thật nhé.",

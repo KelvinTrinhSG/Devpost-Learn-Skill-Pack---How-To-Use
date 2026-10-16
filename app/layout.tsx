@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Lora } from "next/font/google";
 import { Providers } from "@/lib/providers";
 import { THEME_INIT_SCRIPT } from "@/lib/theme-script";
 import { vi } from "@/content/vi";
@@ -15,6 +15,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin", "vietnamese"],
 });
 
+// The "personal" font in the decision game's app preview (needs full Vietnamese glyphs).
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["latin", "vietnamese"],
+  style: ["normal", "italic"],
+});
+
 // Static export: the page is pre-rendered once, in the default language (Vietnamese).
 export const metadata: Metadata = {
   title: vi.meta.title,
@@ -25,7 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="vi"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${lora.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

@@ -39,7 +39,7 @@ Build mode: fast
   Learner check: Play to stage ④, reload — you should see "Welcome back" at stage ④; click Start over. Flip to "I already know this", copy a command, reload — it stays in that mode. Toggle dark mode and sound, reload, and confirm both are remembered.
   Commit: `Remember progress and preferences, add quick command list and toggles`
 
-- [ ] **4. "Why it works" with the "Who makes the decisions?" drag-and-drop**
+- [x] **4. "Why it works" with the "Who makes the decisions?" drag-and-drop**
   Becomes usable: Below the hero, a section explains flipped interaction, cognitive debt, documents as memory, and small reviewed steps; ~6 decision cards can be dragged (mouse, touch, keyboard) between "AI decides" and "You decide", and an app preview changes after every drop from generic to personal.
   Why now: The second interactive piece of the POC; it depends only on the shared UI and dictionaries already in place.
   PRD ref: `prd.md > Why It Works — "Who makes the decisions?"`
@@ -86,4 +86,5 @@ Activity mode:
 - Added headless-browser interaction checks (Playwright driving the installed Edge, run from a scratch folder, not a project dependency) to slice verification — build and HTTP checks alone can't confirm Run / answer / Copy behavior.
 - The theme-init script lives in its own `lib/theme-script.ts` (not in the spec's file list) — the server-rendered `layout.tsx` can't import a constant from the client-only `lib/providers.tsx` or from `lib/storage.ts`, which uses React hooks.
 - Saved language and mode apply right after the page loads, not before first paint (only the theme uses the inline script) — static pre-rendered HTML is always in the defaults (Vietnamese, Guided), so a returning English or Quick-mode visitor may see the default for a split second.
+- Decision-game data (card ids, AI vs. personal looks, the generic / mixed / personal rule) lives in `content/decisions.ts`, and the personal font is Lora loaded via `next/font` — Georgia lacked some Vietnamese glyphs and broke diacritics in the preview.
 
