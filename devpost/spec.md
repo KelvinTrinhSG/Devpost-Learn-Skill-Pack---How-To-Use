@@ -21,7 +21,7 @@ Why this shape: everything the PRD asks for happens inside the visitor's browser
 ## The Core Journey Through the System
 PRD ref: `prd.md > The Core Journey`.
 
-1. Visitor opens the Vercel link → Vercel sends the static page → `Providers` reads `localStorage` (language, theme, sound, mode, stage). First visit: Vietnamese, Guided mode, stage 1, light theme.
+1. Visitor opens the Vercel link → Vercel sends the static page → `Providers` reads `localStorage` (language, theme, sound, mode, stage). First visit: English, Guided mode, stage 1, light theme.
 2. Hero renders `JourneySimulator` with `stages[currentStage]`.
 3. Visitor clicks **Run** → the simulator plays that stage's script: terminal lines appear one by one, files appear in the `devpost/` tab, a sound plays → stage marked complete → saved to `localStorage`.
 4. Interview stage → agent question + preset answer buttons → visitor clicks one → the answer text is inserted into that stage's document preview (`DocPreview`).
@@ -149,7 +149,7 @@ All data is either static content compiled into the page or small preferences in
 **Browser storage (`localStorage`, prefix `skillguide:`)**
 | Key | Value | Updated when | On return |
 |---|---|---|---|
-| `skillguide:lang` | `"en" \| "vi"` | language toggle | restored; if absent, `"vi"` (default) |
+| `skillguide:lang` | `"en" \| "vi"` | language toggle | restored; if absent, `"en"` (default) |
 | `skillguide:theme` | `"light" \| "dark"` | theme toggle | applied before first paint |
 | `skillguide:sound` | `"on" \| "off"` | sound toggle | restored; default on |
 | `skillguide:mode` | `"guided" \| "quick"` | mode switch | restored |
@@ -243,7 +243,7 @@ Devpost Learn Skill Pack - How To Use/
 - Asked which part felt least certain; none was identified ("ok, quá tuyệt"). Noted, no extra exercise added.
 
 **Settled at review**
-- **Default language: Vietnamese** — learner's decision (replaces the browser-language default); `<html lang>` starts as `vi`.
+- **Default language: English** — learner's decision at the `5-build` final review (replaces the earlier Vietnamese default, which had replaced the browser-language default); `<html lang>` starts as `en` and the pre-rendered page is in English.
 - **Sample project in the preset answers:** the simulated learner builds an **English vocabulary flashcard app for Vietnamese learners** — proposed by Claude, accepted by the learner. Lives only in the content files, so it's easy to change.
 
 **Open**

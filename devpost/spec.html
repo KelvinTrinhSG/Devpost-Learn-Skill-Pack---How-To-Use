@@ -231,7 +231,7 @@
       <div class="panel on" id="p1">
         <table>
           <tr><th>Key</th><th>Value</th><th>Updated when</th><th>On return</th></tr>
-          <tr><td><code>skillguide:lang</code></td><td>en | vi</td><td>language toggle</td><td>restored; if absent, <b>vi</b> (default)</td></tr>
+          <tr><td><code>skillguide:lang</code></td><td>en | vi</td><td>language toggle</td><td>restored; if absent, <b>en</b> (default)</td></tr>
           <tr><td><code>skillguide:theme</code></td><td>light | dark</td><td>theme toggle</td><td>applied before first paint</td></tr>
           <tr><td><code>skillguide:sound</code></td><td>on | off</td><td>sound toggle</td><td>restored; default on</td></tr>
           <tr><td><code>skillguide:mode</code></td><td>guided | quick</td><td>mode switch</td><td>restored</td></tr>
@@ -338,7 +338,7 @@
   document.querySelectorAll('.an').forEach(n => n.onclick = () => { document.querySelectorAll('.an').forEach(x => x.classList.remove('active')); n.classList.add('active'); document.getElementById('ainfo').innerHTML = A[n.dataset.k]; });
 
   const J = [
-    ['Opens the Vercel link.', 'Vercel sends the static page. Providers reads localStorage. On a first visit: Vietnamese, Guided mode, stage 1, light theme.'],
+    ['Opens the Vercel link.', 'Vercel sends the static page. Providers reads localStorage. On a first visit: English, Guided mode, stage 1, light theme.'],
     ['Sees the hero and the simulator.', 'Hero renders JourneySimulator with stages[currentStage].'],
     ['Clicks Run.', 'The script plays: terminal lines one by one, files appear in devpost/, a sound plays. The stage is marked done and saved.'],
     ['Picks a preset answer.', 'The answer text is inserted into DocPreview for that stage\'s document.'],

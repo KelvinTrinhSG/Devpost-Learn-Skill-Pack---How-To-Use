@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Lora } from "next/font/google";
 import { Providers } from "@/lib/providers";
 import { THEME_INIT_SCRIPT } from "@/lib/theme-script";
-import { vi } from "@/content/vi";
+import { en } from "@/content/en";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -22,16 +22,16 @@ const lora = Lora({
   style: ["normal", "italic"],
 });
 
-// Static export: the page is pre-rendered once, in the default language (Vietnamese).
+// Static export: the page is pre-rendered once, in the default language (English).
 export const metadata: Metadata = {
-  title: vi.meta.title,
-  description: vi.meta.description,
+  title: en.meta.title,
+  description: en.meta.description,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="vi"
+      lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${lora.variable} h-full antialiased`}
       suppressHydrationWarning
     >

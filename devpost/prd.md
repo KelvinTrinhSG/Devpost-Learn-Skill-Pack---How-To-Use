@@ -122,7 +122,7 @@ Acceptance criteria:
 - Credits Joe's two videos with links, links to the skill pack, and states the content is rewritten in our own words.
 
 ## States and Boundaries
-- **First visit** — Vietnamese, Guided mode, stage ①, light theme.
+- **First visit** — English, Guided mode, stage ①, light theme.
 - **Returning visit** — opens at the saved stage with a small "Welcome back — continue at stage X" note and a **Start over** button. *(Shift from `scope.md > Explicitly Cut`: saved progress was cut assuming accounts were needed; it's now in, kept on the visitor's own browser only — no account, no server.)*
 - **Journey complete** — completion moment; rail shows all checked; Start over available.
 - **Copy unavailable** — if the browser blocks clipboard access, the command text is selected/highlighted so the visitor can copy it manually.
@@ -142,7 +142,7 @@ Acceptance criteria:
 - **Flow diagram merged into the hero's per-stage Details** — proposed by Claude at the learner's request; frees time for Why and Tips.
 - **Visual style from Mezo Taskify** — learner's choice.
 
-- **Default language is Vietnamese** on first visit; the visitor's choice is then remembered — learner's decision during `4-spec` review (replaces the earlier "follow the browser language" assumption).
+- **Default language is English** on first visit; the visitor's choice is then remembered — learner's decision at the `5-build` final review (replaces the Vietnamese default chosen during `4-spec` review, which had replaced "follow the browser language").
 - Sound is on by default after the first click, with mute available — proposed by Claude, confirmed at review.
 - Desktop-first; readable on a phone, simulator optimized for desktop — proposed by Claude, confirmed at review.
 - The page states it is an **unofficial, community-made guide**, not an official Devpost page — proposed by Claude, confirmed at review.

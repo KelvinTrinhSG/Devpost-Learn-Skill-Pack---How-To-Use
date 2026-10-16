@@ -31,8 +31,8 @@ type Ctx = {
 const AppContext = createContext<Ctx | null>(null);
 
 export function Providers({ children }: { children: ReactNode }) {
-  // Defaults on first visit: Vietnamese, light, sound on, Guided, stage 1 (spec.md > Data Model).
-  const [lang, setLang] = useStored<Lang>("lang", ["en", "vi"], "vi");
+  // Defaults on first visit: English, light, sound on, Guided, stage 1 (spec.md > Data Model).
+  const [lang, setLang] = useStored<Lang>("lang", ["en", "vi"], "en");
   const [theme, setTheme] = useStored<Theme>("theme", ["light", "dark"], "light");
   const [soundPref, setSoundPref] = useStored("sound", ["on", "off"], "on");
   const [mode, setMode] = useStored<Mode>("mode", ["guided", "quick"], "guided");

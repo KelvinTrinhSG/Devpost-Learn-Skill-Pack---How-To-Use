@@ -68,6 +68,8 @@ Build mode: fast
 
 - [ ] Sources footer: show each video's YouTube thumbnail, and a nicer image for the GitHub skill-pack card (learner request at final review).
 
+- [ ] Make English the default language on first visit (learner request at final review).
+
 - [ ] Final review complete — feedback resolved and learner confirms ready to ship
 
 ## Code Tour and App Map
@@ -91,4 +93,5 @@ Activity mode:
 - Decision-game data (card ids, AI vs. personal looks, the generic / mixed / personal rule) lives in `content/decisions.ts`, and the personal font is Lora loaded via `next/font` — Georgia lacked some Vietnamese glyphs and broke diacritics in the preview.
 - Replaced the scaffold's Next.js `app/favicon.ico` with an own `app/icon.svg` (the spec listed the favicon under `public/`; the App Router serves `app/icon.svg` directly). No separate social image was made.
 - Sources footer now loads preview images from YouTube and GitHub at runtime (learner request at final review); `spec.md > External Services and Dependencies` updated. Images fall back to a colored placeholder if blocked — including failures that happen before hydration.
+- Default language changed from Vietnamese to English (learner decision at final review); `prd.md > States and Boundaries`, `prd.md > Product Decisions`, `spec.md > The Core Journey Through the System`, `spec.md > Data Model`, and `spec.md > Decisions and Open Issues` updated. The pre-rendered page and `<html lang>` are now English, so the brief default-language flash now affects returning Vietnamese visitors instead.
 
