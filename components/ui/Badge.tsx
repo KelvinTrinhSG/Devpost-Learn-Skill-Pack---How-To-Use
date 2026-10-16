@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-// 9%-tint fill with a 19%-tint border, Taskify-style.
+// 9%-tint fill with a 19%-tint border.
 export default function Badge({
   children,
   color = "var(--primary)",

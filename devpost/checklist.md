@@ -10,7 +10,7 @@ Build mode: fast
 ## Slices
 
 - [x] **1. The hero simulator plays the first two stages (Install and `/1-start`)**
-  Becomes usable: A running page in the Taskify style (Vietnamese by default, EN/VI toggle in the navbar) whose hero shows the journey simulator. Stage ① Install: click Run → terminal lines play and the 6 skill folders appear. Stage ② `/1-start`: the agent asks one question, the visitor picks a preset answer, and that answer appears inside `learner-profile.md` in the `devpost/` tab. Progress rail, Details panel, and Copy button work on both stages.
+  Becomes usable: A running page in the chosen visual style (Vietnamese by default, EN/VI toggle in the navbar) whose hero shows the journey simulator. Stage ① Install: click Run → terminal lines play and the 6 skill folders appear. Stage ② `/1-start`: the agent asks one question, the visitor picks a preset answer, and that answer appears inside `learner-profile.md` in the `devpost/` tab. Progress rail, Details panel, and Copy button work on both stages.
   Why now: This is the unique kernel — learning by trying the steps — and its riskiest piece is the "stage script as data" engine plus "picked answer appears in the document". Proving it on the first slice, together with the scaffold, design tokens, and typed EN/VI dictionaries, means every later stage is just more data.
   PRD ref: `prd.md > The Core Journey` (steps 1–5), `prd.md > Journey Simulator (Guided mode)`, `prd.md > Look and Feel`, `prd.md > Language, Theme, and Sound Toggles` (EN/VI part)
   Spec ref: `spec.md > Stack`, `spec.md > Look and Feel`, `spec.md > Components` (Providers, Navbar, Hero, JourneySimulator and its parts, CopyButton), `spec.md > Data Model`, `spec.md > File Structure`

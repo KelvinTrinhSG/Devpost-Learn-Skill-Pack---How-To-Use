@@ -6,14 +6,14 @@ status: approved
 # Devpost Learn Skill Pack - How To Use — Technical Spec
 
 ## How This Works, In Plain Language
-This is one web page built with **Next.js + React + Tailwind** — the same stack as the learner's Mezo Taskify project. There is **no server and no database**: Next.js turns the project into plain static files (HTML, CSS, JavaScript) at build time, and Vercel serves those files at a public link.
+This is one web page built with **Next.js + React + Tailwind** — a stack the learner already knows. There is **no server and no database**: Next.js turns the project into plain static files (HTML, CSS, JavaScript) at build time, and Vercel serves those files at a public link.
 
 The page is made of a few pieces:
 
 - **Content files** — all the words on the page live in two dictionaries, `en.ts` and `vi.ts`, with exactly the same keys. A tiny hook (`useLang()`) picks the right one. TypeScript refuses to build if the Vietnamese file is missing a key the English one has.
 - **Stage scripts** — each of the 7 simulator stages is described as *data*: the real command, the lines of terminal output to play, the agent's sample question, the preset answers, which file appears, and the Details text. The simulator component just "plays" a script. Changing content means editing data, not logic.
 - **Components** — the navbar, the hero with the simulator (or quick command list), the "Who makes the decisions?" drag-and-drop, the tip cards, and the footer.
-- **The browser's sticky note (`localStorage`)** — remembers the current stage, the Guided/Quick mode, language, theme, and sound on/off. Same approach Taskify uses for its theme.
+- **The browser's sticky note (`localStorage`)** — remembers the current stage, the Guided/Quick mode, language, theme, and sound on/off.
 - **Sound** — generated in code with the browser's Web Audio API (short clicks and chimes). No audio files, no copyright worries.
 
 Why this shape: everything the PRD asks for happens inside the visitor's browser, so a server would add cost and failure points without proving anything.
@@ -35,10 +35,10 @@ PRD ref: `prd.md > The Core Journey`.
 Quick mode: the switch sets `mode = "quick"` in `localStorage` → hero renders `QuickCommandList` instead of the simulator.
 
 ## Stack
-- **Next.js** (App Router) with **static export** (`output: "export"` in `next.config.ts`) — learner's choice, familiar from Taskify. Docs: https://nextjs.org/docs/app/guides/static-exports
+- **Next.js** (App Router) with **static export** (`output: "export"` in `next.config.ts`) — learner's choice, a stack the learner already knows. Docs: https://nextjs.org/docs/app/guides/static-exports
 - **React** + **TypeScript** — comes with Next.js. Docs: https://react.dev
-- **Tailwind CSS** (v4, `@import "tailwindcss"` as in Taskify) + CSS variables for the design tokens. Docs: https://tailwindcss.com/docs
-- **Geist / Geist Mono** via `next/font/google`, as in Taskify. Docs: https://nextjs.org/docs/app/getting-started/fonts
+- **Tailwind CSS** (v4, `@import "tailwindcss"`) + CSS variables for the design tokens. Docs: https://tailwindcss.com/docs
+- **Geist / Geist Mono** via `next/font/google`. Docs: https://nextjs.org/docs/app/getting-started/fonts
 - **@dnd-kit/core** — drag-and-drop that also works on touch screens and with the keyboard (native HTML drag-and-drop doesn't work on touch). Docs: https://docs.dndkit.com
 - **canvas-confetti** — completion effect. Docs: https://github.com/catdad/canvas-confetti
 - **Web Audio API** (built into browsers) — sound effects. Docs: https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
@@ -56,17 +56,17 @@ Unverified: exact current versions of Next.js, Tailwind, and dnd-kit were not lo
 - **Public repository:** https://github.com/KelvinTrinhSG/Devpost-Learn-Skill-Pack---How-To-Use
 
 ## Look and Feel
-Carried forward from `prd.md > Look and Feel` (style of Mezo Taskify; no Taskify name/logo).
+Carried forward from `prd.md > Look and Feel`.
 
-- `app/globals.css` defines the same CSS variables as Taskify: `--bg #FAFAF8`, `--bg-alt #F3F0E9`, `--surface #FFFFFF`, `--surface-2 #F1EEE7`, `--border #E3DFD6`, `--border-strong #D2CDC0`, `--text #171717`, `--text-muted #55524B`, `--text-dim #6E6B62`, `--text-faint #8B877C`, `--primary #FF004D`, `--primary-strong #990070`, `--secondary #5546FF`, `--secondary-light #6E4FE0`, `--success #16824F`, `--blue #2563EB`, `--gold #B8860B`, `--danger #D6304B`; plus the `[data-theme="dark"]` overrides (`--bg #0A0A0F`, `--surface #131313`, `--border #262626`, `--text #F2F1EE`, `--primary-strong #FF5FA8`, `--secondary #8B80FF`, `--success #00D395`, …).
+- `app/globals.css` defines these CSS variables: `--bg #FAFAF8`, `--bg-alt #F3F0E9`, `--surface #FFFFFF`, `--surface-2 #F1EEE7`, `--border #E3DFD6`, `--border-strong #D2CDC0`, `--text #171717`, `--text-muted #55524B`, `--text-dim #6E6B62`, `--text-faint #8B877C`, `--primary #FF004D`, `--primary-strong #990070`, `--secondary #5546FF`, `--secondary-light #6E4FE0`, `--success #16824F`, `--blue #2563EB`, `--gold #B8860B`, `--danger #D6304B`; plus the `[data-theme="dark"]` overrides (`--bg #0A0A0F`, `--surface #131313`, `--border #262626`, `--text #F2F1EE`, `--primary-strong #FF5FA8`, `--secondary #8B80FF`, `--success #00D395`, …).
 - Radii `--radius-sm 8px`, `--radius-md 12px`, `--radius-lg 16px`; shadows `--shadow-sm/md/lg`; easing `cubic-bezier(0.16, 1, 0.3, 1)`; durations 150 / 200 / 550ms.
-- Shared classes like Taskify: `.btn-primary`, `.btn-outline`, `.btn-motion`, `.card-hover`, `.hero-in`, `.float`, `.figure`; `prefers-reduced-motion` override.
+- Shared classes: `.btn-primary`, `.btn-outline`, `.btn-motion`, `.card-hover`, `.hero-in`, `.float`, `.figure`; `prefers-reduced-motion` override.
 - Headline weight 800, tracking −0.03em, `clamp(36px, 5vw, 58px)`; one gradient phrase (primary → primary-strong).
 - Pill section labels (`SectionLabel`), 9%/19% tinted badges (`Badge`), "01/02" step numbering with a faint big number and a gradient bottom bar.
 - Hero backdrop: radial glows of primary and secondary.
 - The simulated window: a mac-style window frame with three tabs, Geist Mono for terminal and file content.
 - Copy tone: friendly, short, direct; same meaning in EN and VI.
-- Theme: light default; set before first paint with a small inline script (as Taskify does) to avoid a flash.
+- Theme: light default; set before first paint with a small inline script to avoid a flash.
 
 ## Components
 
@@ -126,7 +126,7 @@ Credits and links to Joe's two videos and the skill pack; states content is rewr
 PRD ref: `prd.md > Sources Footer`.
 
 ### Shared UI
-`Reveal` (fade/slide in on scroll, one-shot, like Taskify), `SectionLabel`, `Badge`, `Button`.
+`Reveal` (fade/slide in on scroll, one-shot), `SectionLabel`, `Badge`, `Button`.
 
 ## Data Model
 All data is either static content compiled into the page or small preferences in `localStorage`.
@@ -164,7 +164,7 @@ Devpost Learn Skill Pack - How To Use/
 ├── app/
 │   ├── layout.tsx          # fonts, theme-init script, Providers
 │   ├── page.tsx            # assembles Navbar, Hero, WhySection, TipsSection, SiteFooter
-│   └── globals.css         # Taskify-style tokens, light/dark, shared classes, reduced motion
+│   └── globals.css         # design tokens, light/dark, shared classes, reduced motion
 ├── components/
 │   ├── Navbar.tsx
 │   ├── Hero.tsx
@@ -233,7 +233,7 @@ Devpost Learn Skill Pack - How To Use/
 
 ## Decisions and Open Issues
 **Learner choices**
-- Next.js + React + Tailwind — familiar from Mezo Taskify.
+- Next.js + React + Tailwind — already familiar to the learner.
 - Deploy to Vercel (optional per rules; chosen so others can open a link).
 - Accepted Claude's recommendations: typed EN/VI dictionaries + `useLang()`; `localStorage` for progress and preferences; Web Audio for sound; dnd-kit for drag-and-drop (touch support, extra dependency accepted); canvas-confetti; Geist via `next/font`; stage scripts as data.
 

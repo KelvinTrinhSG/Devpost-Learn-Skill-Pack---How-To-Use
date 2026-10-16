@@ -37,7 +37,7 @@ One page, vertical scroll, in this order (`scope.md > The POC Boundary`):
 The separate "clickable 6-step flow diagram" from scope is **merged into the hero**: each simulator stage carries its own Details panel (see Product Decisions).
 
 ## Look and Feel
-Borrowed from the learner's own project *Mezo Taskify* (`D:\Blockchain\Mezo Taskify\frontend`) — style only; no Taskify name or logo.
+Visual style chosen by the learner.
 
 - **Theme:** light by default (warm off-white), dark mode via a toggle.
 - **Colors (light):** background `#FAFAF8` / alt `#F3F0E9`; surfaces `#FFFFFF` / `#F1EEE7`; borders `#E3DFD6` / `#D2CDC0`; text `#171717`, muted `#55524B`, dim `#6E6B62`, faint `#8B877C`.
@@ -132,7 +132,7 @@ Acceptance criteria:
 
 ## Product Decisions
 - Name: **Devpost Learn Skill Pack - How To Use** — learner's choice.
-- **One long scrolling page**, like the Taskify landing page — learner's choice.
+- **One long scrolling page**, like a typical product landing page — learner's choice.
 - **Walkthrough lives in the hero** — learner's choice; it's the top priority.
 - **Run button only, no typing** — learner's choice; easiest for users.
 - **Preset interview answers** — learner's choice.
@@ -140,7 +140,7 @@ Acceptance criteria:
 - **Guided ⇄ I already know this switch** + copy button on every stage — learner's request: "làm sao để tôi cũng có thể dùng được khi tôi đã biết… có chỗ để tôi copy các dòng lệnh" *(so I can use it too when I already know — somewhere to copy the commands)*.
 - **Remember the stage in progress** — learner's choice.
 - **Flow diagram merged into the hero's per-stage Details** — proposed by Claude at the learner's request; frees time for Why and Tips.
-- **Visual style from Mezo Taskify** — learner's choice.
+- **Visual style below (colors, type, motion)** — learner's choice.
 
 - **Default language is English** on first visit; the visitor's choice is then remembered — learner's decision at the `5-build` final review (replaces the Vietnamese default chosen during `4-spec` review, which had replaced "follow the browser language").
 - Sound is on by default after the first click, with mute available — proposed by Claude, confirmed at review.
