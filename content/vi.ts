@@ -10,6 +10,23 @@ export const vi: Dictionary = {
   nav: {
     name: "Skill Pack — Cách dùng",
     language: "Ngôn ngữ",
+    toDark: "Chuyển sang giao diện tối",
+    toLight: "Chuyển sang giao diện sáng",
+    mute: "Tắt âm thanh",
+    unmute: "Bật âm thanh",
+  },
+  mode: {
+    label: "Bạn muốn dùng trang này thế nào?",
+    guided: "Hướng dẫn từng bước",
+    quick: "Tôi biết rồi",
+  },
+  quick: {
+    title: "7 lệnh cần nhớ",
+    intro: "Chạy lần lượt trong một thư mục dự án mới, trống. Gõ /clear giữa các bước.",
+  },
+  welcome: {
+    back: "Chào mừng trở lại — tiếp tục ở bước {n}.",
+    startOver: "Làm lại từ đầu",
   },
   hero: {
     badge: "Hướng dẫn cộng đồng, không chính thức",
@@ -52,6 +69,7 @@ export const vi: Dictionary = {
   stages: {
     1: {
       title: "Cài đặt",
+      short: "Cài 6 skill vào .agents/skills/",
       caption:
         "Tạo một thư mục dự án trống, cài bộ skill vào đó, rồi mở Claude Code ngay trong thư mục.",
       details: {
@@ -64,6 +82,7 @@ export const vi: Dictionary = {
     },
     2: {
       title: "/1-start",
+      short: "Tìm hiểu về bạn → devpost/learner-profile.md",
       caption:
         "Agent giới thiệu phương pháp và hỏi về bạn, để mọi bước sau hợp với kinh nghiệm của bạn.",
       chat: [
@@ -107,6 +126,7 @@ export const vi: Dictionary = {
     },
     3: {
       title: "/2-scope",
+      short: "Tìm lõi ý tưởng → devpost/scope.md",
       caption:
         "Cuộc trò chuyện quan trọng nhất: agent khơi ý tưởng từ đầu bạn ra, rồi cắt gọn thành một bản thử nghiệm (proof of concept) nhỏ.",
       chat: [
@@ -150,6 +170,7 @@ export const vi: Dictionary = {
     },
     4: {
       title: "/3-prd",
+      short: "Mô tả sản phẩm → devpost/prd.md",
       caption:
         "Biến scope đã duyệt thành mô tả sản phẩm đầy đủ: hành trình chính, từng màn hình, các trạng thái và trường hợp đặc biệt. Chưa bàn về code.",
       chat: [
@@ -192,6 +213,7 @@ export const vi: Dictionary = {
     },
     5: {
       title: "/4-spec",
+      short: "Bản thiết kế kỹ thuật → devpost/spec.md",
       caption:
         "Bản thiết kế kỹ thuật: công nghệ, chạy ở đâu, các thành phần, dữ liệu, cấu trúc file — vừa với bản thử nghiệm và vừa với bạn.",
       chat: [
@@ -235,6 +257,7 @@ export const vi: Dictionary = {
     },
     6: {
       title: "/5-build",
+      short: "Build từng lát đã kiểm tra → devpost/checklist.md",
       caption:
         "Agent chia kế hoạch thành các lát nhỏ chạy được, build từng lát, kiểm tra và commit — rồi dừng lại để bạn dùng thử app.",
       chat: [
@@ -274,6 +297,7 @@ export const vi: Dictionary = {
     },
     7: {
       title: "/6-ship",
+      short: "Repo công khai, video demo, bài nộp của bạn",
       caption:
         "Kiểm tra app đã sẵn sàng, đảm bảo không lộ bí mật, rồi hướng dẫn tạo repo GitHub công khai, video demo, và bài nộp do chính bạn viết.",
       chat: [
@@ -318,5 +342,6 @@ export const vi: Dictionary = {
     badge: "Hoàn thành hành trình!",
     body: "Bạn đã xem đủ 7 bước. Giờ hãy tạo một thư mục trống mới và chạy thật nhé.",
     startOver: "Làm lại từ đầu",
+    quickLink: "Xem tất cả lệnh",
   },
 };

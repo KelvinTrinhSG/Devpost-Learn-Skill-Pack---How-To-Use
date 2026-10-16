@@ -29,7 +29,7 @@ Build mode: fast
   Learner check: Play all 7 stages from start to end, try both Approve and Request a change at ⑥, click Fix at ⑦, and watch the completion moment. Jump around with the progress rail. Tell me which stage felt unclear or too slow/fast.
   Commit: `Complete all 7 simulator stages with tips and completion moment`
 
-- [ ] **3. The page remembers you, and experienced visitors get the quick command list**
+- [x] **3. The page remembers you, and experienced visitors get the quick command list**
   Becomes usable: Reloading reopens the simulator at the saved stage with "Welcome back — continue at stage X" and Start over. The Guided ⇄ "I already know this" switch shows the 7 commands with copy buttons. Light/dark and sound toggles work (generated Web Audio sounds after the first click) and all choices survive a reload.
   Why now: These are cross-cutting states that wrap the finished simulator; doing them after slice 2 means the saved progress covers every real stage, and they're independent of the sections further down the page.
   PRD ref: `prd.md > Quick Command List ("I already know this" mode)`, `prd.md > Language, Theme, and Sound Toggles`, `prd.md > States and Boundaries`
@@ -84,4 +84,6 @@ Activity mode:
 
 - Removed the scaffold's `cacheComponents` / `partialPrefetching` options from `next.config.ts` and kept `output: "export"` — `create-next-app` 16.4 enabled them by default; they aren't needed for a fully client-side static page.
 - Added headless-browser interaction checks (Playwright driving the installed Edge, run from a scratch folder, not a project dependency) to slice verification — build and HTTP checks alone can't confirm Run / answer / Copy behavior.
+- The theme-init script lives in its own `lib/theme-script.ts` (not in the spec's file list) — the server-rendered `layout.tsx` can't import a constant from the client-only `lib/providers.tsx` or from `lib/storage.ts`, which uses React hooks.
+- Saved language and mode apply right after the page loads, not before first paint (only the theme uses the inline script) — static pre-rendered HTML is always in the defaults (Vietnamese, Guided), so a returning English or Quick-mode visitor may see the default for a split second.
 

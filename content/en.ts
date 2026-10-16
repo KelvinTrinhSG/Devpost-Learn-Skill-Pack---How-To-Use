@@ -3,6 +3,7 @@
 
 export type StageText = {
   title: string; // short name in the progress rail
+  short: string; // one-line description in the quick command list
   caption: string; // what this stage is for
   chat?: string[]; // agent messages in the Claude Code tab; the last one is the question
   // Preset answers: button label + text inserted into the doc (+ an optional reply for this answer only).
@@ -23,6 +24,23 @@ export const en = {
   nav: {
     name: "Skill Pack — How To Use",
     language: "Language",
+    toDark: "Switch to dark theme",
+    toLight: "Switch to light theme",
+    mute: "Mute sounds",
+    unmute: "Turn sounds on",
+  },
+  mode: {
+    label: "How do you want to use this?",
+    guided: "Guided walkthrough",
+    quick: "I already know this",
+  },
+  quick: {
+    title: "The 7 commands",
+    intro: "Run them in order inside a new, empty project folder. Type /clear between steps.",
+  },
+  welcome: {
+    back: "Welcome back — continue at stage {n}.",
+    startOver: "Start over",
   },
   hero: {
     badge: "Unofficial community guide",
@@ -65,6 +83,7 @@ export const en = {
   stages: {
     1: stage({
       title: "Install",
+      short: "Installs the 6 skills into .agents/skills/",
       caption:
         "Create an empty project folder, install the skill pack into it, and open Claude Code there.",
       details: {
@@ -77,6 +96,7 @@ export const en = {
     }),
     2: stage({
       title: "/1-start",
+      short: "Learns about you → devpost/learner-profile.md",
       caption:
         "The agent introduces the method and asks about you, so every later step fits your experience.",
       chat: [
@@ -120,6 +140,7 @@ export const en = {
     }),
     3: stage({
       title: "/2-scope",
+      short: "Finds the idea's kernel → devpost/scope.md",
       caption:
         "The most important conversation: the agent pulls the idea out of your head, then cuts it down to a small proof of concept.",
       chat: [
@@ -163,6 +184,7 @@ export const en = {
     }),
     4: stage({
       title: "/3-prd",
+      short: "Defines the product → devpost/prd.md",
       caption:
         "Turns the approved scope into a full product description: the core journey, every screen, states and edge cases. No code talk yet.",
       chat: [
@@ -205,6 +227,7 @@ export const en = {
     }),
     5: stage({
       title: "/4-spec",
+      short: "Technical blueprint → devpost/spec.md",
       caption:
         "The technical blueprint: stack, where it runs, components, data, and file structure — sized to a proof of concept and to you.",
       chat: [
@@ -248,6 +271,7 @@ export const en = {
     }),
     6: stage({
       title: "/5-build",
+      short: "Builds in verified slices → devpost/checklist.md",
       caption:
         "The agent turns the plan into small working slices, builds them one by one, verifies and commits each — and stops so you can try the app.",
       chat: [
@@ -287,6 +311,7 @@ export const en = {
     }),
     7: stage({
       title: "/6-ship",
+      short: "Public repo, demo video, your submission",
       caption:
         "Checks the app is ready, makes sure no secrets go public, then guides the public GitHub repo, the demo video, and your own submission.",
       chat: [
@@ -331,6 +356,7 @@ export const en = {
     badge: "Journey complete!",
     body: "You've seen all 7 steps. Now make a new empty folder and run them for real.",
     startOver: "Start over",
+    quickLink: "See all commands",
   },
 };
 

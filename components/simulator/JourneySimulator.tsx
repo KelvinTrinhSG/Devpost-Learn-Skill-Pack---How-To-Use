@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { stageText, type Dictionary, type StageText } from "@/content/en";
 import { stages, type Stage, type TipKey } from "@/content/stages";
-import { useLang } from "@/lib/providers";
+import { useLang, useProgress, useSound } from "@/lib/providers";
+import { EMPTY_PROGRESS, readRaw, parseProgress, useHydrated, type Progress } from "@/lib/storage";
 import CopyButton from "@/components/ui/CopyButton";
 import ProgressRail from "./ProgressRail";
 import SimWindow, { type Tab } from "./SimWindow";
@@ -28,36 +29,73 @@ function docPath(stage: Stage) {
   return stage.files?.find((f) => f.startsWith("devpost/")) ?? null;
 }
 
+// Captured once per page load (the simulator remounts when switching modes).
+let loadedProgress: Progress | null = null;
+let welcomeClosed = false;
+function progressAtPageLoad(): Progress {
+  if (typeof window === "undefined") return EMPTY_PROGRESS;
+  loadedProgress ??= parseProgress(readRaw("progress"), stages.length);
+  return loadedProgress;
+}
+
 function prefersReducedMotion() {
   return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
 export default function JourneySimulator() {
   const { t } = useLang();
-  const [current, setCurrent] = useState(0);
-  const [done, setDone] = useState<number[]>([]);
-  const [answers, setAnswers] = useState<Record<number, number>>({});
+  const { progress, updateProgress, setMode } = useProgress();
+  const { play } = useSound();
+  const hydrated = useHydrated();
+
+  // Saved progress (current stage, completed stages, chosen answers) lives in the browser.
+  const { done, answers } = progress;
+  const current = progress.stage - 1;
+
+  // Per-visit playback state for the current stage.
   const [phase, setPhase] = useState<Phase>("idle");
   const [shown, setShown] = useState(0);
-  const [tab, setTab] = useState<Tab>(stages[0].tab);
+  const [tabOverride, setTabOverride] = useState<Tab | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [fresh, setFresh] = useState<string[]>([]);
   const [flash, setFlash] = useState<Tab[]>([]);
   const [tip, setTip] = useState<TipKey | null>(null);
   const [celebrate, setCelebrate] = useState(false); // confetti only when stage 7 is completed, not on revisit
 
+  // "Welcome back" uses what was saved when the page opened; hidden once the visitor acts.
+  const [savedAtLoad] = useState(progressAtPageLoad);
+  const [welcomeDismissed, setWelcomeDismissedState] = useState(welcomeClosed);
+  const setWelcomeDismissed = (v: boolean) => {
+    welcomeClosed = v;
+    setWelcomeDismissedState(v);
+  };
+  const showWelcome =
+    hydrated && !welcomeDismissed && (savedAtLoad.stage > 1 || savedAtLoad.done.length > 0);
+
   const stage = stages[current];
   const text = stageText(t, stage.id);
   const total = totalSteps(stage, text);
+  const isLast = current === stages.length - 1;
+
+  // A completed stage that hasn't been replayed this visit shows its finished state.
+  const restored = phase === "idle" && done.includes(stage.id);
+  const viewPhase: Phase = restored ? "done" : phase;
+  const viewShown = restored ? total : shown;
+  const tab = tabOverride ?? stage.tab;
 
   function complete() {
-    setDone((d) => (d.includes(stage.id) ? d : [...d, stage.id]));
+    updateProgress((p) => ({ ...p, done: p.done.includes(stage.id) ? p.done : [...p.done, stage.id] }));
     setPhase("done");
-    if (current === stages.length - 1) setCelebrate(true);
+    if (isLast) {
+      setCelebrate(true);
+      play("complete");
+    } else {
+      play(stage.files?.length ? "file" : "stage");
+    }
     if (stage.files?.length) {
       setFresh(stage.files);
       setSelected(docPath(stage));
-      setTab("files");
+      setTabOverride("files");
       if (stage.tab === "chat") setFlash(["chat"]);
     }
   }
@@ -84,43 +122,51 @@ export default function JourneySimulator() {
   }, [phase]);
 
   function run() {
+    play("run");
+    setWelcomeDismissed(true);
     setFresh([]);
     setFlash([]);
-    setTab(stage.tab);
+    setTabOverride(null);
     setShown(prefersReducedMotion() ? total : 0);
     setPhase("playing");
   }
 
   function answer(i: number) {
-    setAnswers((a) => ({ ...a, [stage.id]: i }));
+    play("click");
+    updateProgress((p) => ({ ...p, answers: { ...p.answers, [stage.id]: i } }));
     setPhase("finishing");
   }
 
   const closeTip = useCallback(() => setTip(null), []);
 
   function next() {
+    play("click");
     if (stage.tipKey) setTip(stage.tipKey);
     goTo(current + 1);
   }
 
   function startOver() {
-    setDone([]);
-    setAnswers({});
+    play("click");
+    updateProgress(() => EMPTY_PROGRESS);
     setSelected(null);
     setCelebrate(false);
-    goTo(0, true);
+    resetPlayback();
   }
 
-  function goTo(index: number, reset = false) {
-    const next = stages[index];
-    const isDone = !reset && done.includes(next.id);
-    setCurrent(index);
-    setPhase(isDone ? "done" : "idle");
-    setShown(isDone ? totalSteps(next, stageText(t, next.id)) : 0);
-    setTab(next.tab);
+  function goTo(index: number) {
+    updateProgress((p) => ({ ...p, stage: index + 1 }));
+    resetPlayback();
+    const path = docPath(stages[index]);
+    if (path && done.includes(stages[index].id)) setSelected(path);
+  }
+
+  function resetPlayback() {
+    setWelcomeDismissed(true);
+    setPhase("idle");
+    setShown(0);
+    setTabOverride(null);
     setFresh([]);
     setFlash([]);
-    if (isDone && docPath(next)) setSelected(docPath(next));
   }
 
   // Every file created by a completed stage, in journey order.
@@ -137,22 +183,20 @@ export default function JourneySimulator() {
 
   // Terminal tab: the stage's own script, or (for chat stages) the running Claude session.
   const terminalLines =
-    stage.tab === "chat" ? ["$ claude", ...(shown > 0 ? [`> ${stage.command}`] : [])] : (stage.terminalLines ?? []);
-  const terminalShown = stage.tab === "chat" ? terminalLines.length : shown;
+    stage.tab === "chat" ? ["$ claude", ...(viewShown > 0 ? [`> ${stage.command}`] : [])] : (stage.terminalLines ?? []);
+  const terminalShown = stage.tab === "chat" ? terminalLines.length : viewShown;
 
   // Claude Code tab: command → agent messages → chosen answer → reply.
   const messages: ChatMessage[] = [];
-  if (stage.tab === "chat" && shown > 0) {
+  if (stage.tab === "chat" && viewShown > 0) {
     messages.push({ from: "you", text: stage.command, mono: true });
-    (text.chat ?? []).slice(0, shown - 1).forEach((m) => messages.push({ from: "agent", text: m }));
+    (text.chat ?? []).slice(0, viewShown - 1).forEach((m) => messages.push({ from: "agent", text: m }));
     const picked = answers[stage.id];
     const chosen = picked !== undefined ? text.answers?.[picked] : undefined;
-    if (chosen && (phase === "finishing" || phase === "done")) messages.push({ from: "you", text: chosen.label });
+    if (chosen && (viewPhase === "finishing" || viewPhase === "done")) messages.push({ from: "you", text: chosen.label });
     const reply = chosen?.reply ?? text.reply;
-    if (phase === "done" && reply) messages.push({ from: "agent", text: reply });
+    if (viewPhase === "done" && reply) messages.push({ from: "agent", text: reply });
   }
-
-  const isLast = current === stages.length - 1;
 
   const views: Record<Tab, ReactNode> = {
     terminal: (
@@ -160,7 +204,7 @@ export default function JourneySimulator() {
         lines={terminalLines}
         shown={terminalShown}
         idleText={t.sim.terminalIdle}
-        active={phase === "playing" && stage.tab === "terminal"}
+        active={viewPhase === "playing" && stage.tab === "terminal"}
       />
     ),
     chat: <ChatView messages={messages} idleText={stage.tab === "chat" ? t.sim.chatIdle : t.sim.chatOtherStage} />,
@@ -188,6 +232,26 @@ export default function JourneySimulator() {
 
   return (
     <div className="relative space-y-4">
+      {showWelcome && (
+        <div
+          className="line-in flex flex-wrap items-center justify-between gap-2 rounded-(--radius-md) px-3 py-2 text-sm"
+          style={{
+            background: "color-mix(in srgb, var(--secondary) 9%, transparent)",
+            border: "1px solid color-mix(in srgb, var(--secondary) 19%, transparent)",
+          }}
+          role="status"
+        >
+          <span className="font-medium">👋 {t.welcome.back.replace("{n}", String(savedAtLoad.stage))}</span>
+          <button
+            type="button"
+            onClick={startOver}
+            className="cursor-pointer text-sm font-semibold text-(--secondary) hover:underline"
+          >
+            ↺ {t.welcome.startOver}
+          </button>
+        </div>
+      )}
+
       <ProgressRail current={current} done={done} onJump={goTo} />
 
       <div>
@@ -203,20 +267,20 @@ export default function JourneySimulator() {
       <SimWindow
         tab={tab}
         onTab={(id) => {
-          setTab(id);
+          setTabOverride(id);
           setFlash((f) => f.filter((x) => x !== id));
         }}
         views={views}
-        scrollKey={`${stage.id}-${shown}-${phase}`}
+        scrollKey={`${stage.id}-${viewShown}-${viewPhase}`}
         flash={flash}
       />
 
       <div className="min-h-[44px]">
-        {isLast && phase === "done" ? (
-          <CompletionMoment celebrate={celebrate} onStartOver={startOver} />
+        {isLast && viewPhase === "done" ? (
+          <CompletionMoment celebrate={celebrate} onStartOver={startOver} onQuick={() => setMode("quick")} />
         ) : (
           <StageControls
-            phase={phase}
+            phase={viewPhase}
             interaction={stage.interaction}
             text={text}
             isLast={isLast}
@@ -245,7 +309,7 @@ function buildDocs(t: Dictionary, answers: Record<number, number>) {
     const picked = answers[s.id];
     docs[path] = {
       lines: text.doc,
-      answer: picked !== undefined && text.answers ? text.answers[picked].text : null,
+      answer: picked !== undefined ? (text.answers?.[picked]?.text ?? null) : null,
     };
   }
   return docs;

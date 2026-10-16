@@ -6,7 +6,15 @@ import { useLang } from "@/lib/providers";
 import Button from "@/components/ui/Button";
 
 // Confetti + badge when stage 7 is complete.
-export default function CompletionMoment({ celebrate, onStartOver }: { celebrate: boolean; onStartOver: () => void }) {
+export default function CompletionMoment({
+  celebrate,
+  onStartOver,
+  onQuick,
+}: {
+  celebrate: boolean;
+  onStartOver: () => void;
+  onQuick: () => void;
+}) {
   const { t } = useLang();
 
   useEffect(() => {
@@ -36,9 +44,14 @@ export default function CompletionMoment({ celebrate, onStartOver }: { celebrate
         <p className="font-extrabold tracking-tight">{t.completion.badge}</p>
         <p className="text-sm text-(--text-muted)">{t.completion.body}</p>
       </div>
-      <Button variant="outline" size="sm" onClick={onStartOver}>
-        ↺ {t.completion.startOver}
-      </Button>
+      <div className="flex flex-wrap gap-2">
+        <Button size="sm" onClick={onQuick}>
+          ⚡ {t.completion.quickLink}
+        </Button>
+        <Button variant="outline" size="sm" onClick={onStartOver}>
+          ↺ {t.completion.startOver}
+        </Button>
+      </div>
     </div>
   );
 }
