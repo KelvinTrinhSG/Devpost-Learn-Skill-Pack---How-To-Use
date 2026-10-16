@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App Map — Skill Pack: How To Use</title>
+<style>
+  :root { --bg:#FAFAF8; --surface:#fff; --surface-2:#F1EEE7; --border:#E3DFD6; --text:#171717; --muted:#55524B; --dim:#6E6B62; --primary:#FF004D; --primary-strong:#990070; --secondary:#5546FF; --success:#16824F; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }
+  main { max-width: 920px; margin: 0 auto; padding: 40px 20px 64px; }
+  h1 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.03em; line-height: 1.1; margin: 8px 0 12px; }
+  h1 span { background: linear-gradient(90deg, var(--primary), var(--primary-strong)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  h2 { font-size: 22px; letter-spacing: -0.02em; margin: 40px 0 12px; }
+  .label { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--primary); background:#FF004D17; border:1px solid #FF004D30; border-radius:999px; padding:3px 10px; }
+  p, li { color: var(--muted); }
+  code { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: .9em; background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; color: var(--text); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin: 12px 0; }
+  .pieces { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .pieces .card { margin:0; }
+  .pieces h3, .stop h3 { margin: 0 0 6px; font-size: 16px; color: var(--text); }
+  .stop { position: relative; padding-left: 56px; }
+  .stop .n { position:absolute; left:18px; top:18px; width:28px; height:28px; border-radius:50%; background:var(--primary); color:#fff; font-weight:700; display:flex; align-items:center; justify-content:center; font-size:13px; }
+  table { width:100%; border-collapse: collapse; }
+  td { border-top: 1px solid var(--border); padding: 10px 8px; vertical-align: top; color: var(--muted); }
+  td:first-child { color: var(--text); font-weight: 600; width: 38%; }
+  .practice { border-left: 4px solid var(--success); }
+  details summary { cursor: pointer; font-weight: 600; color: var(--secondary); }
+  svg { width: 100%; height: auto; display:block; }
+  a { color: var(--secondary); }
+  .meta { font-size: 13px; color: var(--dim); }
+  :focus-visible { outline: 3px solid var(--secondary); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<main>
+  <span class="label">App map · snapshot</span>
+  <h1>Skill Pack — <span>How To Use</span></h1>
+  <p>A one-page, bilingual (English / Vietnamese) guide to the Devpost Learn <em>Build With AI: Basics</em> skill pack. Visitors click through a simulated version of the 7 real steps (install, then <code>/1-start</code> … <code>/6-ship</code>), learn why the method works, and pick up tips. Everything runs in the browser: no server, no account, no API key.</p>
+
+  <h2>The main pieces</h2>
+  <div class="pieces">
+    <div class="card"><h3>Content (data)</h3><p><code>content/en.ts</code> and <code>content/vi.ts</code> hold every visible word. <code>content/stages.ts</code> describes the 7 stages as scripts.</p></div>
+    <div class="card"><h3>Simulator</h3><p><code>components/simulator/</code> “plays” a stage script: terminal lines, agent chat, files appearing, and the generated document.</p></div>
+    <div class="card"><h3>Memory</h3><p><code>lib/providers.tsx</code> and <code>lib/storage.ts</code> keep language, theme, sound, mode and progress in the browser’s <code>localStorage</code>.</p></div>
+    <div class="card"><h3>Other sections</h3><p><code>components/why/</code> (drag-and-drop game), <code>components/TipsSection.tsx</code>, <code>components/SiteFooter.tsx</code>.</p></div>
+  </div>
+
+  <h2>One action, end to end</h2>
+  <p>The action: on an interview stage (e.g. <code>/1-start</code>), the visitor clicks <strong>Run</strong>, picks a preset answer, and the answer appears inside <code>learner-profile.md</code> in the <code>devpost/</code> tab.</p>
+  <div class="card" role="img" aria-label="Diagram: Run and answer buttons in StageControls call run and answer in JourneySimulator, which saves progress through updateProgress to localStorage and shows the answer in DocPreview.">
+    <svg viewBox="0 0 860 210" aria-hidden="true">
+      <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#55524B"/></marker></defs>
+      <g font-family="system-ui, Arial" font-size="13">
+        <rect x="10" y="20" width="190" height="78" rx="12" fill="#FF004D12" stroke="#FF004D"/>
+        <text x="105" y="48" text-anchor="middle" font-weight="700" fill="#171717">Click Run / answer</text>
+        <text x="105" y="70" text-anchor="middle" fill="#55524B">StageControls.tsx</text>
+        <rect x="250" y="20" width="230" height="78" rx="12" fill="#5546FF12" stroke="#5546FF"/>
+        <text x="365" y="48" text-anchor="middle" font-weight="700" fill="#171717">run() · answer() · complete()</text>
+        <text x="365" y="70" text-anchor="middle" fill="#55524B">JourneySimulator.tsx</text>
+        <rect x="530" y="20" width="320" height="78" rx="12" fill="#16824F12" stroke="#16824F"/>
+        <text x="690" y="48" text-anchor="middle" font-weight="700" fill="#171717">Answer shown in the document</text>
+        <text x="690" y="70" text-anchor="middle" fill="#55524B">DocPreview.tsx (fills “{answer}”)</text>
+        <rect x="250" y="130" width="230" height="64" rx="12" fill="#F1EEE7" stroke="#D2CDC0"/>
+        <text x="365" y="157" text-anchor="middle" font-weight="700" fill="#171717">updateProgress → localStorage</text>
+        <text x="365" y="178" text-anchor="middle" fill="#55524B">lib/providers.tsx · lib/storage.ts</text>
+        <line x1="200" y1="59" x2="246" y2="59" stroke="#55524B" stroke-width="2" marker-end="url(#a)"/>
+        <line x1="480" y1="59" x2="526" y2="59" stroke="#55524B" stroke-width="2" marker-end="url(#a)"/>
+        <line x1="365" y1="98" x2="365" y2="126" stroke="#55524B" stroke-width="2" marker-end="url(#a)"/>
+      </g>
+    </svg>
+  </div>
+
+  <h2>Reference route (3 stops)</h2>
+  <p class="meta">A reference route, not a completed tour. Open the project in your editor and search for the anchors below.</p>
+  <div class="card stop"><span class="n">1</span>
+    <h3><code>components/simulator/StageControls.tsx</code> · <code>StageControls</code></h3>
+    <p>Decides the one button the stage needs right now: <strong>Run</strong>, the preset answers (or Approve / Fix), or <strong>Next stage</strong>. Clicking calls <code>onRun</code> / <code>onAnswer</code>.</p>
+  </div>
+  <div class="card stop"><span class="n">2</span>
+    <h3><code>components/simulator/JourneySimulator.tsx</code> · <code>function run</code>, <code>function answer</code>, <code>function complete</code></h3>
+    <p><code>run()</code> starts playback, and a <code>useEffect</code> reveals one line every 380&nbsp;ms (<code>STEP_MS</code>). <code>answer()</code> saves the choice with <code>updateProgress</code>. <code>complete()</code> marks the stage done, plays a sound, and switches to the <code>devpost/</code> tab. Progress is stored as JSON under <code>skillguide:progress</code> (<code>lib/storage.ts</code> · <code>writeRaw</code>, <code>parseProgress</code>).</p>
+  </div>
+  <div class="card stop"><span class="n">3</span>
+    <h3><code>components/simulator/DocPreview.tsx</code> · <code>DocPreview</code> (+ <code>buildDocs</code> in JourneySimulator)</h3>
+    <p><code>buildDocs</code> takes each stage’s <code>doc</code> lines from the dictionary. <code>DocPreview</code> replaces <code>{answer}</code> with the chosen answer’s text and highlights it in pink.</p>
+  </div>
+
+  <h2>To change this, start here</h2>
+  <div class="card">
+    <table>
+      <tr><td>Any visible text (both languages)</td><td><code>content/en.ts</code> and the same key in <code>content/vi.ts</code>. The build fails if <code>vi.ts</code> is missing a key.</td></tr>
+      <tr><td>A stage’s command, terminal lines, files, or tip</td><td><code>content/stages.ts</code> (<code>stages</code>), then its texts under <code>stages</code> in both dictionaries</td></tr>
+      <tr><td>Preset answers and the generated documents</td><td><code>answers</code> and <code>doc</code> for that stage in both dictionaries</td></tr>
+      <tr><td>Simulator speed</td><td><code>STEP_MS</code> / <code>FINISH_MS</code> in <code>JourneySimulator.tsx</code></td></tr>
+      <tr><td>Colors, radii, shadows (light and dark)</td><td><code>app/globals.css</code> (<code>:root</code> and <code>[data-theme="dark"]</code>)</td></tr>
+      <tr><td>Default language</td><td><code>lib/providers.tsx</code> · <code>useStored&lt;Lang&gt;("lang", …, "en")</code> and <code>lang="en"</code> in <code>app/layout.tsx</code></td></tr>
+      <tr><td>Decision-game cards and preview</td><td><code>content/decisions.ts</code>, <code>why.game</code> in both dictionaries, <code>components/why/AppPreview.tsx</code></td></tr>
+      <tr><td>Tips and sources</td><td><code>bestPractices</code> and <code>footer</code> in both dictionaries</td></tr>
+    </table>
+  </div>
+
+  <h2>A practice to reuse</h2>
+  <div class="card practice">
+    <p><strong>Write acceptance criteria as something you can observe, then check exactly that.</strong> The PRD said: <em>“Switching language changes every visible text on the page with no leftover strings in the other language”</em> (<code>prd.md › Language, Theme, and Sound Toggles</code>). Because it was observable, it became a mechanical check: load the page in each language, then search the visible text for every sentence from the other dictionary. It passed in both directions. When the default language was changed to English at the final review, the same check was re-run and passed again in both languages.</p>
+    <p>Some criteria can only be judged by looking. A screenshot taken during slice 4 showed that the Georgia font broke Vietnamese diacritics in the decision-game preview, which no text check would have caught. Switching to Lora fixed it.</p>
+    <p>On your next project: for each feature, ask “what would I see if this works?”, write that down in the PRD, and have the agent turn it into a check it runs after every step.</p>
+  </div>
+
+  <h2>Run it again</h2>
+  <div class="card">
+    <p><code>npm install</code> → <code>npm run dev</code> → open <a href="http://localhost:3000">http://localhost:3000</a>. Production build: <code>npm run build</code> (static files in <code>out/</code>).</p>
+    <p>Live: <a href="https://devpost-learn-skill-pack-how-to-use.vercel.app">devpost-learn-skill-pack-how-to-use.vercel.app</a> · Repo: <a href="https://github.com/KelvinTrinhSG/Devpost-Learn-Skill-Pack---How-To-Use">GitHub</a></p>
+    <details><summary>About this map</summary>
+      <p>A snapshot of the code at commit <code>4fb6ffd</code>. Paths and names can drift as the project changes; search for the symbol names if a path moves.</p>
+    </details>
+  </div>
+</main>
+</body>
+</html>

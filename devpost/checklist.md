@@ -62,27 +62,27 @@ Build mode: fast
 ## Hands-on Checkpoints
 
 - [x] Early usable behavior explored — after slice 1 (first look at the style and simulator feel, while it can still shape stages ③–⑦). Learner tried it: "tất cả đều ok" (all OK) — no changes requested.
-- [ ] Final kick-the-tires exploration and feedback completed
+- [x] Final kick-the-tires exploration and feedback completed — learner asked for source thumbnails and an English default; both done and verified.
 
 ## Final Review
 
-- [ ] Sources footer: show each video's YouTube thumbnail, and a nicer image for the GitHub skill-pack card (learner request at final review).
+- [x] Sources footer: show each video's YouTube thumbnail, and a nicer image for the GitHub skill-pack card (learner request at final review). Committed `d661d98`; headless check: 3 images load, fallback placeholders show when images are blocked.
 
-- [ ] Make English the default language on first visit (learner request at final review).
+- [x] Make English the default language on first visit (learner request at final review). Committed `44405da`; headless check: first visit English, VI choice remembered, no leftover strings either way.
 
-- [ ] Final review complete — feedback resolved and learner confirms ready to ship
+- [x] Final review complete — feedback resolved and learner confirms ready to ship. The learner reviewed the running app, asked for the two changes above, then had the repo pushed to GitHub and the site deployed to Vercel (https://devpost-learn-skill-pack-how-to-use.vercel.app), and asked to move on to `6-ship` — taken as confirmation the PoC is ready.
 
 ## Code Tour and App Map
 
-- [ ] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
-- [ ] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
-- [ ] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
+- [x] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
+- [x] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
+- [x] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
 
-Activity and evidence:
-Route and stops:
-Edit outcome:
-Reflection:
-Activity mode:
+Activity and evidence: Brief evidence-based recap (the learner asked to move straight to shipping and had no separate learning goal). Connection: the observable PRD criterion "no leftover strings in the other language" became the bilingual leftover-text check, which passed in both languages and was re-run after the English-default change; screenshot review caught the Georgia diacritics bug (fixed with Lora).
+Route and stops: Reference route only (not toured): `StageControls.tsx` › `StageControls` → `JourneySimulator.tsx` › `run` / `answer` / `complete` (+ `lib/storage.ts` › `writeRaw`) → `DocPreview.tsx` › `DocPreview`.
+Edit outcome: Not applicable — no optional edit offered; the learner asked to proceed to shipping.
+Reflection: Optional transfer question offered in the hand-off message; answering is optional.
+Activity mode: Recap. App map: `devpost/app-map.html` — 32 path/symbol checks passed against source; renders with JavaScript disabled.
 
 ## Revisions
 
