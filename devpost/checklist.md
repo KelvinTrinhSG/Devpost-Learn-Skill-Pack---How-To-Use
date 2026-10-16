@@ -49,7 +49,7 @@ Build mode: fast
   Learner check: Scroll to "Why it works", drag each card to "You decide" and back, watch the preview change; try once with the keyboard (Tab, Space, arrow keys). Tell me whether the generic vs. personal difference is obvious enough.
   Commit: `Add Why it works section with decision drag-and-drop`
 
-- [ ] **5. Tips, sources footer, scroll animations, and a finished bilingual page**
+- [x] **5. Tips, sources footer, scroll animations, and a finished bilingual page**
   Becomes usable: The full page: Best Practices & Tips cards, the Sources footer crediting Joe's videos and the skill pack with the "unofficial community guide" note, sections fading in on scroll, reduced-motion respected, readable on a phone, and every visible string switching between EN and VI.
   Why now: Mostly content and polish around the working interactive parts; last because nothing depends on it.
   PRD ref: `prd.md > Best Practices & Tips`, `prd.md > Sources Footer`, `prd.md > Screens and Layout`, `prd.md > Look and Feel` (motion)
@@ -87,4 +87,5 @@ Activity mode:
 - The theme-init script lives in its own `lib/theme-script.ts` (not in the spec's file list) — the server-rendered `layout.tsx` can't import a constant from the client-only `lib/providers.tsx` or from `lib/storage.ts`, which uses React hooks.
 - Saved language and mode apply right after the page loads, not before first paint (only the theme uses the inline script) — static pre-rendered HTML is always in the defaults (Vietnamese, Guided), so a returning English or Quick-mode visitor may see the default for a split second.
 - Decision-game data (card ids, AI vs. personal looks, the generic / mixed / personal rule) lives in `content/decisions.ts`, and the personal font is Lora loaded via `next/font` — Georgia lacked some Vietnamese glyphs and broke diacritics in the preview.
+- Replaced the scaffold's Next.js `app/favicon.ico` with an own `app/icon.svg` (the spec listed the favicon under `public/`; the App Router serves `app/icon.svg` directly). No separate social image was made.
 

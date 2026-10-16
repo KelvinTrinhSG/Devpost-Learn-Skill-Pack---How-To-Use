@@ -14,6 +14,7 @@ export const vi: Dictionary = {
     toLight: "Chuyển sang giao diện sáng",
     mute: "Tắt âm thanh",
     unmute: "Bật âm thanh",
+    links: { journey: "Thử ngay", why: "Vì sao hiệu quả", tips: "Mẹo", sources: "Nguồn" },
   },
   mode: {
     label: "Bạn muốn dùng trang này thế nào?",
@@ -395,6 +396,77 @@ export const vi: Dictionary = {
         youStart: "Mở một bài hát ♪",
       },
     },
+  },
+  bestPractices: {
+    label: "Kinh nghiệm hay",
+    title: "Mẹo để dùng bộ skill hiệu quả",
+    intro: "Những thói quen nhỏ tạo ra khác biệt giữa một app chung chung và một app thật sự của bạn.",
+    items: [
+      {
+        icon: "🎙️",
+        title: "Nhập bằng giọng nói",
+        body: "Nói nhanh hơn gõ khoảng ba lần. Câu trả lời dài và tự nhiên hơn cho agent nhiều chất liệu \"của bạn\" hơn để làm việc.",
+      },
+      {
+        icon: "💬",
+        title: "Để agent phỏng vấn bạn",
+        body: "Trả lời thành câu đầy đủ, có ví dụ và lý do. \"Mình chưa biết\" cũng là câu trả lời ổn — agent sẽ giúp bạn nghĩ tiếp.",
+      },
+      {
+        icon: "🧹",
+        title: "/clear giữa các bước",
+        body: "Bắt đầu mỗi skill bằng một cuộc trò chuyện mới. Mọi điều quan trọng đã được ghi trong devpost/, nên không mất gì cả.",
+      },
+      {
+        icon: "📊",
+        title: "Để ý mức sử dụng",
+        body: "Cuộc trò chuyện càng dài càng tốn hạn mức. /clear giữa các bước và giữ bản thử nghiệm nhỏ gọn giúp tiết kiệm.",
+      },
+      {
+        icon: "🔎",
+        title: "Nhờ tìm cảm hứng",
+        body: "Bí ý tưởng giao diện hay tính năng? Nhờ agent tìm hiểu các sản phẩm tương tự và đưa ra lựa chọn — rồi bạn chọn.",
+      },
+      {
+        icon: "👀",
+        title: "Xem kỹ ở mỗi điểm dừng",
+        body: "Khi agent dừng lại, hãy mở app và thật sự dùng thử. Bắt lỗi ở một lát nhỏ thì rẻ hơn nhiều.",
+      },
+      {
+        icon: "🔐",
+        title: "Không commit bí mật",
+        body: "API key phải nằm trong .env (git bỏ qua file này). devpost/learner-profile.md là thông tin riêng, không đưa lên repo công khai.",
+      },
+      {
+        icon: "✍️",
+        title: "Tự viết bài nộp",
+        body: "Câu chuyện dự án trên Devpost là của bạn. Agent có thể chỉ ra chỗ thiếu và sửa chính tả, nhưng không viết thay bạn.",
+      },
+    ],
+  },
+  footer: {
+    label: "Nguồn",
+    title: "Nội dung lấy từ đâu",
+    body: "Mọi nội dung trên trang này được tóm tắt và viết lại bằng lời của chúng tôi từ các nguồn bên dưới — hãy xem để hiểu đầy đủ.",
+    videos: [
+      {
+        title: "Stop Building Generic AI Apps: The Flipped Interaction Method",
+        note: "Joe — phương pháp đằng sau bộ skill.",
+        url: "https://www.youtube.com/watch?v=sooC4QGFUUs",
+      },
+      {
+        title: "Live build: \"Who Let The Dogs Out\"",
+        note: "Joe — dùng trọn bộ skill cho một dự án thật.",
+        url: "https://www.youtube.com/watch?v=0Zi0OkKTZqM",
+      },
+    ],
+    skillPack: {
+      title: "Bộ skill Build With AI: Basics",
+      note: "6 skill trên GitHub — nguồn chuẩn cho mọi câu lệnh.",
+      url: "https://github.com/challengepost/learn-ai-basics",
+    },
+    unofficial:
+      "Hướng dẫn không chính thức, do cộng đồng làm. Không liên kết hay được Devpost bảo trợ. Trình mô phỏng chỉ hiển thị nội dung mẫu; không có gì chạy trên máy bạn.",
   },
   completion: {
     badge: "Hoàn thành hành trình!",

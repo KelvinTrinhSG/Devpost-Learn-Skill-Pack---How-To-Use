@@ -28,6 +28,7 @@ export const en = {
     toLight: "Switch to light theme",
     mute: "Mute sounds",
     unmute: "Turn sounds on",
+    links: { journey: "Try it", why: "Why it works", tips: "Tips", sources: "Sources" },
   },
   mode: {
     label: "How do you want to use this?",
@@ -409,6 +410,77 @@ export const en = {
         youStart: "Play a song ♪",
       },
     },
+  },
+  bestPractices: {
+    label: "Best practices",
+    title: "Tips for using the skill pack well",
+    intro: "Small habits that make the difference between a generic app and one that's truly yours.",
+    items: [
+      {
+        icon: "🎙️",
+        title: "Use speech-to-text",
+        body: "Speaking is about three times faster than typing. Longer, more natural answers give the agent much more of you to work with.",
+      },
+      {
+        icon: "💬",
+        title: "Let the agent interview you",
+        body: "Answer in full sentences with examples and reasons. \"I don't know yet\" is a fine answer — the agent will help you think it through.",
+      },
+      {
+        icon: "🧹",
+        title: "/clear between steps",
+        body: "Start each skill in a fresh conversation. Everything important is already written in devpost/, so nothing is lost.",
+      },
+      {
+        icon: "📊",
+        title: "Watch your usage",
+        body: "Long conversations use more of your plan. Clearing between steps and keeping the proof of concept small keeps costs down.",
+      },
+      {
+        icon: "🔎",
+        title: "Ask for inspiration",
+        body: "Stuck on a look or a feature? Ask the agent to research similar products and show you options — then you pick.",
+      },
+      {
+        icon: "👀",
+        title: "Review at every checkpoint",
+        body: "Open the app and actually try it when the agent pauses. Catching a problem in a small slice is cheap.",
+      },
+      {
+        icon: "🔐",
+        title: "Never commit secrets",
+        body: "API keys belong in .env, which git ignores. devpost/learner-profile.md is personal and stays out of your public repo.",
+      },
+      {
+        icon: "✍️",
+        title: "Write your own submission",
+        body: "The project story on Devpost is yours to write. The agent can point out gaps and fix spelling, not write it for you.",
+      },
+    ],
+  },
+  footer: {
+    label: "Sources",
+    title: "Where this comes from",
+    body: "Everything on this page is summarized and rewritten in our own words from the sources below — watch them for the full story.",
+    videos: [
+      {
+        title: "Stop Building Generic AI Apps: The Flipped Interaction Method",
+        note: "Joe — the method behind the skill pack.",
+        url: "https://www.youtube.com/watch?v=sooC4QGFUUs",
+      },
+      {
+        title: "Live build: \"Who Let The Dogs Out\"",
+        note: "Joe — the whole skill pack used on a real project.",
+        url: "https://www.youtube.com/watch?v=0Zi0OkKTZqM",
+      },
+    ],
+    skillPack: {
+      title: "Build With AI: Basics skill pack",
+      note: "The 6 skills on GitHub — the authoritative reference for every command.",
+      url: "https://github.com/challengepost/learn-ai-basics",
+    },
+    unofficial:
+      "An unofficial, community-made guide. Not affiliated with or endorsed by Devpost. The simulator shows sample content only; nothing runs on your machine.",
   },
   completion: {
     badge: "Journey complete!",

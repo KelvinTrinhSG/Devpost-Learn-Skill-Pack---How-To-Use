@@ -30,6 +30,18 @@ export default function Navbar() {
           <span className="truncate">{t.nav.name}</span>
         </a>
 
+        <div className="hidden items-center gap-1 lg:flex">
+          {(["journey", "why", "tips", "sources"] as const).map((id) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              className="rounded-(--radius-sm) px-3 py-1.5 text-sm font-medium text-(--text-muted) transition-colors hover:bg-(--neutral-tint) hover:text-(--text)"
+            >
+              {t.nav.links[id]}
+            </a>
+          ))}
+        </div>
+
         <div className="flex shrink-0 items-center gap-2">
           <div
             role="group"
